@@ -7,3 +7,4 @@ dist/
 *.pem
 *.key
 npm-debug.log*
+__MACOSX/
