@@ -3,7 +3,7 @@ import type { PortfolioProject, TechnologyCategory } from './types'
 export const profile = {
   handle: 'sl4dk1y',
   github: 'https://github.com/sl4dk1y',
-  avatar: '/images/github-avatar.jpg',
+  avatar: '/images/github-avatar.webp',
 }
 
 export const technologyCategories: TechnologyCategory[] = [
@@ -54,8 +54,8 @@ export const projects: PortfolioProject[] = [
 export const seo = {
   title: { en: 'sl4dk1y — Portfolio', ru: 'sl4dk1y — Портфолио' },
   description: {
-    en: 'Applied Artificial Intelligence student interested in AI engineering, backend development, LLMs and RAG.',
-    ru: 'Изучаю прикладной искусственный интеллект, интересуюсь AI Engineering, backend-разработкой, LLM и RAG.',
+    en: 'Applied artificial intelligence student interested in software development, backend systems, automation, and practical AI.',
+    ru: 'Изучаю прикладной искусственный интеллект, разрабатываю backend-сервисы и инструменты автоматизации, интересуюсь практическим применением AI.',
   },
   url: 'https://sl4dk1y.github.io/',
 }

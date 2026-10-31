@@ -27,7 +27,7 @@ export const translations = {
     about: {
       eyebrow: 'ABOUT',
       title: 'What I study',
-        body: 'I study applied artificial intelligence and build practical tools around LLMs and RAG. I am interested in AI engineering and backend development.',
+      body: 'I study applied artificial intelligence and build software, from backend services and automation tools to systems that use AI. I’m also interested in application architecture, data processing, and practical uses of new technology.',
     },
     stack: {
       eyebrow: 'STACK',
@@ -81,7 +81,7 @@ export const translations = {
     about: {
       eyebrow: 'ОБО МНЕ',
       title: 'Учёба и интересы',
-        body: 'Изучаю прикладной искусственный интеллект и создаю практические инструменты для работы с LLM и RAG. Интересуюсь AI Engineering и backend-разработкой.',
+      body: 'Изучаю прикладной искусственный интеллект и разрабатываю программные решения: backend-сервисы, инструменты автоматизации и системы с AI. Интересуюсь архитектурой приложений, обработкой данных и тем, как применять новые технологии на практике.',
     },
     stack: {
       eyebrow: 'СТЕК',

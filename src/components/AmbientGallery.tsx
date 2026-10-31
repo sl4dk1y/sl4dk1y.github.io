@@ -17,6 +17,21 @@ type CollageItem = {
 const itemsPerSide = 7
 type CollageSlot = Pick<CollageItem, 'x' | 'y' | 'width' | 'rotation' | 'depth'>
 
+const categoryWeights: Record<string, number> = {
+  flower: 6,
+  landscape: 5,
+  botanical: 3,
+  portrait: 2.5,
+  architecture: 2.5,
+  insect: 0.15,
+  bird: 0.65,
+  animal: 0.65,
+  'terrestrial-animal': 0.65,
+  'marine-life': 0.65,
+}
+
+const faunaCategories = new Set(['bird', 'animal', 'terrestrial-animal', 'marine-life'])
+
 const layouts: Record<Side, readonly (readonly CollageSlot[])[]> = {
   left: [
     [
@@ -87,6 +102,49 @@ function shuffle<T>(items: readonly T[]): T[] {
   return result
 }
 
+function selectArtworks(items: readonly Artwork[]): Artwork[] {
+  const weighted = items
+    .map((artwork) => ({
+      artwork,
+      key: Math.random() ** (1 / (categoryWeights[artwork.category] ?? 1)),
+    }))
+    .sort((first, second) => second.key - first.key)
+  const selected: Artwork[] = []
+  let insectCount = 0
+  let faunaCount = 0
+
+  for (const { artwork } of weighted) {
+    if (artwork.category === 'insect' && insectCount >= 1) continue
+    if (faunaCategories.has(artwork.category) && faunaCount >= 3) continue
+
+    selected.push(artwork)
+    if (artwork.category === 'insect') insectCount += 1
+    if (faunaCategories.has(artwork.category)) faunaCount += 1
+    if (selected.length === itemsPerSide * 2) break
+  }
+
+  const byCategory = new Map<string, Artwork[]>()
+  for (const artwork of shuffle(selected)) {
+    const group = byCategory.get(artwork.category) ?? []
+    group.push(artwork)
+    byCategory.set(artwork.category, group)
+  }
+
+  const interleaved: Artwork[] = []
+  while (interleaved.length < selected.length) {
+    const available = [...byCategory.entries()].filter(([, group]) => group.length > 0)
+    const previous = interleaved[interleaved.length - 1]?.category
+    const differentCategory = available.filter(([category]) => category !== previous)
+    const choices = differentCategory.length > 0 ? differentCategory : available
+    const chosen = choices[Math.floor(Math.random() * choices.length)]
+    if (!chosen) break
+    const artwork = chosen[1].shift()
+    if (artwork) interleaved.push(artwork)
+  }
+
+  return interleaved
+}
+
 function createComposition(): CollageItem[] {
   const heroPaths = new Set(heroArtworks.map((artwork) => artwork.src))
   const heroSources = new Set(heroArtworks.map((artwork) => artwork.source))
@@ -100,7 +158,7 @@ function createComposition(): CollageItem[] {
     seen.add(artwork.source)
     return true
   })
-  const selected = shuffle(uniqueArtwork).slice(0, itemsPerSide * 2)
+  const selected = selectArtworks(uniqueArtwork)
   const sideLayouts: Record<Side, readonly CollageSlot[]> = {
     left: layouts.left[Math.floor(Math.random() * layouts.left.length)] ?? layouts.left[0] ?? [],
     right: layouts.right[Math.floor(Math.random() * layouts.right.length)] ?? layouts.right[0] ?? [],
@@ -158,6 +216,7 @@ export function AmbientGallery() {
           <div className={`ambient-gallery__side ambient-gallery__side--${side}`} key={side}>
             {composition.filter((item) => item.side === side).map((item) => (
           <img
+            key={item.artwork.id}
             className={`ambient-gallery__image ambient-gallery__image--${item.depth}`}
             src={item.artwork.src}
             alt=""
