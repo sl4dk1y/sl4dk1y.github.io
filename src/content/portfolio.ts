@@ -3,7 +3,7 @@ import type { PortfolioEducation, PortfolioExperience, PortfolioLanguage, Portfo
 export const profile = {
   handle: 'sl4dk1y',
   github: 'https://github.com/sl4dk1y',
-  githubAvatar: 'https://github.com/sl4dk1y.png',
+  githubAvatar: 'https://github.com/sl4dk1y.png?size=128',
   avatar: '/images/github-avatar.webp',
   email: 'sweetbusiness@duck.com',
 }
@@ -186,7 +186,7 @@ export const projects: PortfolioProject[] = [
 ]
 
 export const seo = {
-  title: { en: 'sl4dk1y — Portfolio', ru: 'sl4dk1y — Портфолио' },
+  title: { en: 'sl4dk1y | Portfolio', ru: 'sl4dk1y | Портфолио' },
   description: {
     en: 'Portfolio of sl4dk1y, a Computer Science and Computer Engineering student with an applied AI specialization. Interests include backend development and AI engineering.',
     ru: 'Портфолио sl4dk1y. Студент направления «Информатика и вычислительная техника» с профилем «Прикладной искусственный интеллект». Интересуюсь AI Engineering и backend-разработкой.',
