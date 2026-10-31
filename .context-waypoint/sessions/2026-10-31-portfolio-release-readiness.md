@@ -21,7 +21,7 @@ Completed the portfolio visual polish, expanded the local artwork collections, a
 - RU/EN and dark/light toggles worked; the light background resolved to `#FAF7F8`, and theme stayed dark after restoration. Mobile navigation opened, navigated to Projects, and closed.
 - GitHub avatar and Hero art loaded. At desktop width, 35 image elements (Hero plus duplicated ambient tracks) completed without failed images. Browser console error list was empty.
 - Local Docker container `sl4dk1y-portfolio-preview` is healthy at `127.0.0.1:8080`. Main page, JS, CSS, artwork credits, health endpoint, robots, sitemap, favicon, Apple touch icon, and Open Graph PNG returned HTTP 200.
-- A redacted source scan found no token/private-key patterns, root `.env` files, or local `/Users/a1111/` paths.
+- A redacted source scan found no token/private-key patterns, root `.env` files, or local `$PROJECT_ROOT/` paths.
 
 ## Public project verification note
 

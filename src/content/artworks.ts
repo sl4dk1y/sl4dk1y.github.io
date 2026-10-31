@@ -15,7 +15,7 @@ export interface Artwork {
   attribution: Record<ArtworkLocale, string>
 }
 
-export const heroArtworks: Artwork[] = [
+const initialHeroArtworks: Artwork[] = [
   {
     id: 'red-frangipanni',
     src: '/images/red-frangipanni.webp',
@@ -341,9 +341,7 @@ export const heroArtworks: Artwork[] = [
   },
 ]
 
-export const fallbackHeroArtwork = heroArtworks[0]
-
-export const ambientArtworks: Artwork[] = [
+const originalAmbientArtworks: Artwork[] = [
   {
     id: 'coromandel-flora',
     src: '/artwork/ambient/coromandel-flora.webp',
@@ -923,4 +921,154 @@ export const ambientArtworks: Artwork[] = [
     category: 'landscape', alt: { en: '', ru: '' },
     attribution: { en: "American Landscape · Elizabeth Gilbert Jerome · 1872 · National Gallery of Art", ru: "American Landscape · Elizabeth Gilbert Jerome · 1872 · Национальная галерея искусства" },
   },
+]
+
+const additionalAmbientArtworks: Artwork[] = [
+  {
+    id: 'met-10181', src: '/artwork/ambient/met-10181.webp', width: 599, height: 428,
+    title: 'Landscape', artist: 'Ralph Albert Blakelock', date: '1885 to 1895',
+    source: 'https://www.metmuseum.org/art/collection/search/10181', license: 'CC0, The Met Open Access', category: 'landscape',
+    alt: { en: 'Wooded landscape with a river and a pale sky.', ru: 'Лесной пейзаж с рекой и светлым небом.' },
+    attribution: { en: 'Landscape · Ralph Albert Blakelock · 1885 to 1895 · The Met', ru: 'Landscape · Ralph Albert Blakelock · с 1885 по 1895 год · The Met' },
+  },
+  {
+    id: 'met-335112', src: '/artwork/ambient/met-335112.webp', width: 599, height: 390,
+    title: 'Landscape', artist: 'Gillis van Coninxloo', date: 'late 16th to early 17th century',
+    source: 'https://www.metmuseum.org/art/collection/search/335112', license: 'CC0, The Met Open Access', category: 'landscape',
+    alt: { en: 'Historic landscape drawing with distant hills and trees.', ru: 'Старинный рисунок пейзажа с далёкими холмами и деревьями.' },
+    attribution: { en: 'Landscape · Gillis van Coninxloo · late 16th to early 17th century · The Met', ru: 'Landscape · Gillis van Coninxloo · конец XVI — начало XVII века · The Met' },
+  },
+  {
+    id: 'met-49079', src: '/artwork/ambient/met-49079.webp', width: 599, height: 493,
+    title: 'Mountain Landscape', artist: 'Soga Shōhaku', date: 'ca. 1761 to 1763',
+    source: 'https://www.metmuseum.org/art/collection/search/49079', license: 'CC0, The Met Open Access', category: 'landscape',
+    alt: { en: 'Mountain landscape painted in muted ink and earth tones.', ru: 'Горный пейзаж в приглушённых чернильных и земляных тонах.' },
+    attribution: { en: 'Mountain Landscape · Soga Shōhaku · ca. 1761 to 1763 · The Met', ru: 'Mountain Landscape · Soga Shōhaku · около 1761–1763 годов · The Met' },
+  },
+  {
+    id: 'met-13001', src: '/artwork/ambient/met-13001.webp', width: 599, height: 306,
+    title: 'Seascape Fantasy', artist: null, date: '1770 to 1800',
+    source: 'https://www.metmuseum.org/art/collection/search/13001', license: 'CC0, The Met Open Access', category: 'landscape',
+    alt: { en: 'Dark seascape with ships and a distant fortified shoreline.', ru: 'Морской пейзаж с кораблями и укреплённым берегом вдали.' },
+    attribution: { en: 'Seascape Fantasy · 1770 to 1800 · The Met', ru: 'Seascape Fantasy · 1770–1800 · The Met' },
+  },
+  {
+    id: 'aic-874', src: '/artwork/ambient/aic-874.webp', width: 843, height: 670,
+    title: 'Landscape', artist: 'Jean Charles Cazin', date: 'c. 1895',
+    source: 'https://www.artic.edu/artworks/874', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'Quiet rural landscape with a farmhouse and a cloudy sky.', ru: 'Спокойный сельский пейзаж с домом и облачным небом.' },
+    attribution: { en: 'Landscape · Jean Charles Cazin · c. 1895 · Art Institute of Chicago', ru: 'Landscape · Jean Charles Cazin · около 1895 года · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-90048', src: '/artwork/ambient/aic-90048.webp', width: 843, height: 653,
+    title: 'Distant View of Niagara Falls', artist: 'Thomas Cole', date: '1830',
+    source: 'https://www.artic.edu/artworks/90048', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'Niagara Falls seen across a broad river beneath a dramatic sky.', ru: 'Водопад Ниагара на фоне широкой реки и облачного неба.' },
+    attribution: { en: 'Distant View of Niagara Falls · Thomas Cole · 1830 · Art Institute of Chicago', ru: 'Вид на Ниагарский водопад издали · Thomas Cole · 1830 · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-146701', src: '/artwork/ambient/aic-146701.webp', width: 686, height: 843,
+    title: 'Mountain Brook', artist: 'Albert Bierstadt', date: '1863',
+    source: 'https://www.artic.edu/artworks/146701', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'A rocky mountain stream winding through a shaded forest.', ru: 'Каменистый ручей, проходящий через тенистый лес.' },
+    attribution: { en: 'Mountain Brook · Albert Bierstadt · 1863 · Art Institute of Chicago', ru: 'Горный ручей · Albert Bierstadt · 1863 · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-76571', src: '/artwork/ambient/aic-76571.webp', width: 843, height: 560,
+    title: 'View of Cotopaxi', artist: 'Frederic Edwin Church', date: '1857',
+    source: 'https://www.artic.edu/artworks/76571', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'Wide landscape with Cotopaxi rising above a river valley.', ru: 'Широкий пейзаж: вулкан Котопахи возвышается над долиной реки.' },
+    attribution: { en: 'View of Cotopaxi · Frederic Edwin Church · 1857 · Art Institute of Chicago', ru: 'Вид на Котопахи · Frederic Edwin Church · 1857 · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-20600', src: '/artwork/ambient/aic-20600.webp', width: 843, height: 631,
+    title: 'Waterfall', artist: 'Louis Gabriel Moreau', date: '1788',
+    source: 'https://www.artic.edu/artworks/20600', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'Waterfall and rocky gorge rendered in light washes of color.', ru: 'Водопад и скалистое ущелье, написанные мягкими цветовыми пятнами.' },
+    attribution: { en: 'Waterfall · Louis Gabriel Moreau · 1788 · Art Institute of Chicago', ru: 'Водопад · Louis Gabriel Moreau · 1788 · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-25966', src: '/artwork/ambient/aic-25966.webp', width: 187, height: 843,
+    title: 'Landscape with Waterfall', artist: 'Utagawa Hiroshige', date: '18th century',
+    source: 'https://www.artic.edu/artworks/25966', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'Tall Japanese print of a narrow waterfall among trees.', ru: 'Вертикальная японская гравюра с водопадом среди деревьев.' },
+    attribution: { en: 'Landscape with Waterfall · Utagawa Hiroshige · 18th century · Art Institute of Chicago', ru: 'Пейзаж с водопадом · Utagawa Hiroshige · XVIII век · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-13255', src: '/artwork/ambient/aic-13255.webp', width: 574, height: 843,
+    title: 'Yoro Waterfall in Mino Province', artist: 'Katsushika Hokusai', date: 'c. 1833',
+    source: 'https://www.artic.edu/artworks/13255', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'Japanese woodblock print of a high waterfall and a rocky stream.', ru: 'Японская гравюра с высоким водопадом и каменистым ручьём.' },
+    attribution: { en: 'Yoro Waterfall in Mino Province · Katsushika Hokusai · c. 1833 · Art Institute of Chicago', ru: 'Водопад Ёро в провинции Мино · Katsushika Hokusai · около 1833 года · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-59455', src: '/artwork/ambient/aic-59455.webp', width: 843, height: 644,
+    title: 'Meetinghouse Hill, Roxbury, Massachusetts', artist: 'John Ritto Penniman', date: '1799',
+    source: 'https://www.artic.edu/artworks/59455', license: 'CC0, Art Institute of Chicago', category: 'architecture',
+    alt: { en: 'Historic New England townscape with a meetinghouse on a green hill.', ru: 'Старинный вид города Новой Англии с церковью на зелёном холме.' },
+    attribution: { en: 'Meetinghouse Hill, Roxbury, Massachusetts · John Ritto Penniman · 1799 · Art Institute of Chicago', ru: 'Холм с церковью в Роксбери, Массачусетс · John Ritto Penniman · 1799 · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-28849', src: '/artwork/ambient/aic-28849.webp', width: 843, height: 584,
+    title: 'A City Park', artist: 'William Merritt Chase', date: 'c. 1887',
+    source: 'https://www.artic.edu/artworks/28849', license: 'CC0, Art Institute of Chicago', category: 'landscape',
+    alt: { en: 'A park path, garden beds and a seated visitor in late 19th-century style.', ru: 'Парковая дорожка, клумбы и отдыхающий посетитель на картине конца XIX века.' },
+    attribution: { en: 'A City Park · William Merritt Chase · c. 1887 · Art Institute of Chicago', ru: 'Городской парк · William Merritt Chase · около 1887 года · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-51719', src: '/artwork/ambient/aic-51719.webp', width: 843, height: 648,
+    title: 'Winter: Cat on a Cushion', artist: 'Théophile-Alexandre Steinlen', date: '1909',
+    source: 'https://www.artic.edu/artworks/51719', license: 'CC0, Art Institute of Chicago', category: 'animal',
+    alt: { en: 'Print of a reclining tabby cat on a cushion.', ru: 'Гравюра с полосатой кошкой, лежащей на подушке.' },
+    attribution: { en: 'Winter: Cat on a Cushion · Théophile-Alexandre Steinlen · 1909 · Art Institute of Chicago', ru: 'Зима: кошка на подушке · Théophile-Alexandre Steinlen · 1909 · Art Institute of Chicago' },
+  },
+  {
+    id: 'aic-895', src: '/artwork/ambient/aic-895.webp', width: 843, height: 613,
+    title: 'Man with Lance Riding through the Snow', artist: 'Adolphe Schreyer', date: 'c. 1880',
+    source: 'https://www.artic.edu/artworks/895', license: 'CC0, Art Institute of Chicago', category: 'animal',
+    alt: { en: 'A rider on horseback crossing a snowy landscape.', ru: 'Всадник пересекает заснеженный пейзаж.' },
+    attribution: { en: 'Man with Lance Riding through the Snow · Adolphe Schreyer · c. 1880 · Art Institute of Chicago', ru: 'Всадник с копьём в снегу · Adolphe Schreyer · около 1880 года · Art Institute of Chicago' },
+  },
+]
+
+const ownerSelectedAmbientIds = new Set([
+  'nga-73659',
+  'nga-61371',
+  'nga-72327',
+  'nga-110067',
+  'nga-183183',
+])
+const floralAmbientArtworks = originalAmbientArtworks.filter((artwork) =>
+  (artwork.category === 'flower' || artwork.category === 'botanical') && !ownerSelectedAmbientIds.has(artwork.id),
+)
+const floralIds = new Set(floralAmbientArtworks.map((artwork) => artwork.id))
+
+function floralSource(artwork: Artwork) {
+  if (artwork.source.includes('nga.gov')) return { en: 'National Gallery of Art', ru: 'Национальная галерея искусства' }
+  if (artwork.source.includes('metmuseum.org')) return { en: 'The Met', ru: 'The Met' }
+  if (artwork.license.includes('Biodiversity Heritage Library')) return { en: 'Biodiversity Heritage Library', ru: 'Biodiversity Heritage Library' }
+  return { en: 'Open collection', ru: 'Открытая коллекция' }
+}
+
+const movedFloralArtworks = floralAmbientArtworks.map((artwork) => {
+  const source = floralSource(artwork)
+  const attribution = [artwork.title, artwork.artist, artwork.date, source.en].filter(Boolean).join(' · ')
+  const localizedAttribution = [artwork.title, artwork.artist, artwork.date, source.ru].filter(Boolean).join(' · ')
+  return {
+    ...artwork,
+    src: artwork.src.replace('/artwork/ambient/', '/artwork/hero/'),
+    category: 'flower',
+    alt: {
+      en: `Floral artwork depicting ${artwork.title}${artwork.artist ? ` by ${artwork.artist}` : ''}.`,
+      ru: `Цветочное произведение «${artwork.title}»${artwork.artist ? `, ${artwork.artist}` : ''}.`,
+    },
+    attribution: { en: attribution, ru: localizedAttribution },
+  }
+})
+
+export const heroArtworks: Artwork[] = [...initialHeroArtworks, ...movedFloralArtworks]
+export const fallbackHeroArtwork = heroArtworks[0]
+export const ambientArtworks: Artwork[] = [
+  ...originalAmbientArtworks.filter((artwork) => !floralIds.has(artwork.id)),
+  ...additionalAmbientArtworks,
 ]

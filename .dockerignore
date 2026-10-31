@@ -1,6 +1,8 @@
 node_modules
 .git
 .github
+/.context-waypoint/
+/.codebase-memory/
 .DS_Store
 .env
 .env.*

@@ -18,16 +18,14 @@ const itemsPerSide = 7
 type CollageSlot = Pick<CollageItem, 'x' | 'y' | 'width' | 'rotation' | 'depth'>
 
 const categoryWeights: Record<string, number> = {
-  flower: 6,
   landscape: 5,
-  botanical: 3,
   portrait: 2.5,
-  architecture: 2.5,
+  architecture: 4,
   insect: 0.15,
-  bird: 0.65,
-  animal: 0.65,
-  'terrestrial-animal': 0.65,
-  'marine-life': 0.65,
+  bird: 0.9,
+  animal: 1.2,
+  'terrestrial-animal': 1.2,
+  'marine-life': 0.8,
 }
 
 const faunaCategories = new Set(['bird', 'animal', 'terrestrial-animal', 'marine-life'])
@@ -215,23 +213,29 @@ export function AmbientGallery() {
         {(['left', 'right'] as const).map((side) => (
           <div className={`ambient-gallery__side ambient-gallery__side--${side}`} key={side}>
             {composition.filter((item) => item.side === side).map((item) => (
-          <img
+          <span
             key={item.artwork.id}
-            className={`ambient-gallery__image ambient-gallery__image--${item.depth}`}
-            src={item.artwork.src}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            width={item.artwork.width}
-            height={item.artwork.height}
+            className={`ambient-gallery__frame ambient-gallery__frame--${item.depth}`}
             style={{
               left: `${item.x}%`,
               top: `${item.y}%`,
               width: `${item.width}%`,
+              maxWidth: `${(item.artwork.width / item.artwork.height) * 28}vh`,
+              aspectRatio: `${item.artwork.width} / ${item.artwork.height}`,
               transform: `rotate(${item.rotation}deg)`,
             } as CSSProperties}
-          />
+          >
+            <img
+              className="ambient-gallery__image"
+              src={item.artwork.src}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              width={item.artwork.width}
+              height={item.artwork.height}
+            />
+          </span>
             ))}
           </div>
       ))}

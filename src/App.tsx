@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react'
-import { ArrowDownRight, ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { ArrowDownRight, ArrowUpRight, Check, Copy, Menu, Moon, Sun, X } from 'lucide-react'
 import { AmbientGallery } from './components/AmbientGallery'
 import { fallbackHeroArtwork, heroArtworks } from './content/artworks'
-import { profile, projects, seo, technologyCategories } from './content/portfolio'
+import { additionalTraining, education, experiences, languages, profile, projects, seo, technologyCategories } from './content/portfolio'
 import { translations } from './content/translations'
 import type { Locale, Theme } from './content/types'
 import './fonts.css'
 
 const avatarUrl = profile.avatar
+const avatarSources = [profile.githubAvatar, avatarUrl]
 
 function readLocale(): Locale {
   try {
@@ -38,14 +39,23 @@ function chooseHeroArtwork() {
 const selectedHeroArtwork = chooseHeroArtwork()
 
 function Avatar({ size = 'large' }: { size?: 'large' | 'small' }) {
-  const [failed, setFailed] = useState(false)
+  const [sourceIndex, setSourceIndex] = useState(0)
 
   return (
     <span className={`avatar avatar--${size}`} aria-hidden="true">
-      {failed ? (
+      {sourceIndex >= avatarSources.length ? (
         <span className="avatar__fallback">sl</span>
       ) : (
-          <img src={avatarUrl} alt="" width={size === 'large' ? 88 : 30} height={size === 'large' ? 88 : 30} loading={size === 'large' ? 'eager' : 'lazy'} fetchPriority={size === 'large' ? 'high' : 'auto'} decoding="async" onError={() => setFailed(true)} />
+        <img
+          src={avatarSources[sourceIndex]}
+          alt=""
+          width={size === 'large' ? 88 : 30}
+          height={size === 'large' ? 88 : 30}
+          loading={size === 'large' ? 'eager' : 'lazy'}
+          fetchPriority={size === 'large' ? 'high' : 'auto'}
+          decoding="async"
+          onError={() => setSourceIndex((current) => current + 1)}
+        />
       )}
     </span>
   )
@@ -69,7 +79,27 @@ function App() {
   const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
     const [heroArtwork, setHeroArtwork] = useState(selectedHeroArtwork)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [emailCopyStatus, setEmailCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
+  const emailCopyTimer = useRef<number | null>(null)
   const t = translations[locale]
+
+  const copyEmail = async () => {
+    if (emailCopyTimer.current !== null) window.clearTimeout(emailCopyTimer.current)
+    try {
+      await navigator.clipboard.writeText(profile.email)
+      setEmailCopyStatus('copied')
+      emailCopyTimer.current = window.setTimeout(() => {
+        setEmailCopyStatus('idle')
+        emailCopyTimer.current = null
+      }, 1800)
+    } catch {
+      setEmailCopyStatus('failed')
+    }
+  }
+
+  useEffect(() => () => {
+    if (emailCopyTimer.current !== null) window.clearTimeout(emailCopyTimer.current)
+  }, [])
 
   useEffect(() => {
     document.documentElement.lang = locale
@@ -133,8 +163,10 @@ function App() {
 
   const navigation = [
     { id: 'about', label: t.nav.about },
-    { id: 'stack', label: t.nav.stack },
     { id: 'projects', label: t.nav.projects },
+    { id: 'stack', label: t.nav.stack },
+      { id: 'experience', label: t.nav.experience },
+      { id: 'education', label: t.nav.education },
     { id: 'contact', label: t.nav.contact },
   ]
 
@@ -193,18 +225,22 @@ function App() {
               </div>
           </div>
             <figure className="hero__artwork" data-reveal>
-                <img
-                  src={heroArtwork.src}
-                  alt={heroArtwork.alt[locale]}
-                  width={heroArtwork.width}
-                  height={heroArtwork.height}
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  onError={() => {
-                    if (heroArtwork.id !== fallbackHeroArtwork.id) setHeroArtwork(fallbackHeroArtwork)
-                  }}
-                />
+              <div className="hero__artwork-frame">
+                <span className="hero__artwork-image-clip" style={{ aspectRatio: `${heroArtwork.width} / ${heroArtwork.height}` }}>
+                  <img
+                    src={heroArtwork.src}
+                    alt={heroArtwork.alt[locale]}
+                    width={heroArtwork.width}
+                    height={heroArtwork.height}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    onError={() => {
+                      if (heroArtwork.id !== fallbackHeroArtwork.id) setHeroArtwork(fallbackHeroArtwork)
+                    }}
+                  />
+                </span>
+              </div>
                 <figcaption><a href={heroArtwork.source} target="_blank" rel="noreferrer noopener"><span>{heroArtwork.attribution[locale]}</span><ArrowUpRight size={12} aria-hidden="true" /></a></figcaption>
             </figure>
         </section>
@@ -212,21 +248,6 @@ function App() {
         <section className="content-section page-shell about-section" id="about" aria-labelledby="about-title">
             <div data-reveal><SectionTitle id="about-title" label={t.about.eyebrow} title={t.about.title} /></div>
               <p className="about-copy" data-reveal>{t.about.body}</p>
-        </section>
-
-        <section className="content-section page-shell stack-section" id="stack" aria-labelledby="stack-title">
-          <div className="section-heading-row">
-              <div data-reveal><SectionTitle id="stack-title" label={t.stack.eyebrow} title={t.stack.title} /></div>
-              <p className="section-description" data-reveal>{t.stack.intro}</p>
-          </div>
-          <div className="stack-grid">
-            {technologyCategories.map((category) => (
-                <section className="stack-group" data-reveal key={category.id} aria-labelledby={`stack-${category.id}`}>
-                <h3 id={`stack-${category.id}`}>{category.label[locale]}</h3>
-                <ul className="tech-list">{category.items.map((item) => <li key={item}>{item}</li>)}</ul>
-              </section>
-            ))}
-          </div>
         </section>
 
         <section className="content-section page-shell projects-section" id="projects" aria-labelledby="projects-title">
@@ -250,6 +271,77 @@ function App() {
           </div>
         </section>
 
+        <section className="content-section page-shell stack-section" id="stack" aria-labelledby="stack-title">
+          <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="stack-title" label={t.stack.eyebrow} title={t.stack.title} /></div>
+              <p className="section-description" data-reveal>{t.stack.intro}</p>
+          </div>
+          <div className="stack-grid">
+            {technologyCategories.map((category) => (
+                <section className="stack-group" data-reveal key={category.id} aria-labelledby={`stack-${category.id}`}>
+                <h3 id={`stack-${category.id}`}>{category.label[locale]}</h3>
+                <ul className="tech-list">{category.items.map((item) => <li key={item}>{item}</li>)}</ul>
+              </section>
+            ))}
+          </div>
+        </section>
+
+          <section className="content-section page-shell experience-section" id="experience" aria-labelledby="experience-title">
+            <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="experience-title" label={t.experience.eyebrow} title={t.experience.title} /></div>
+              <p className="section-description" data-reveal>{t.experience.intro}</p>
+            </div>
+            <div className="experience-list">
+              {experiences.map((experience) => (
+                <article className="experience-item" data-reveal key={experience.id}>
+                  <div className="experience-meta">
+                    <h3>{experience.role[locale]}</h3>
+                    <p>{experience.period[locale]}</p>
+                    <p className="experience-org">{experience.organization} · {experience.arrangement[locale]}</p>
+                  </div>
+                  <div className="experience-detail">
+                    <p>{experience.summary[locale]}</p>
+                    {experience.highlights[locale].length > 0 && (
+                      <ul>
+                        {experience.highlights[locale].map((highlight) => <li key={highlight}>{highlight}</li>)}
+                      </ul>
+                    )}
+                    {experience.link && <a className="experience-link" href={experience.link.href} target="_blank" rel="noreferrer noopener">{experience.link.label}<ArrowUpRight size={13} aria-hidden="true" /></a>}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="content-section page-shell credential-section" id="education" aria-labelledby="education-title">
+            <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="education-title" label={t.education.eyebrow} title={t.education.title} /></div>
+            </div>
+            <article className="credential-row" data-reveal>
+              <div><h3>{education.field[locale]}</h3><p>{education.specialization[locale]}</p><p>{education.institution[locale]}</p></div>
+              <p className="credential-period">{education.period[locale]}<span>{education.status[locale]}</span></p>
+            </article>
+          </section>
+
+          <section className="content-section page-shell credential-section" id="training" aria-labelledby="training-title">
+            <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="training-title" label={t.training.eyebrow} title={t.training.title} /></div>
+            </div>
+            <article className="credential-row" data-reveal>
+              <div><h3>{additionalTraining.course[locale]}</h3><p>{additionalTraining.provider}</p></div>
+              <p className="credential-period">{additionalTraining.period[locale]}<span>{additionalTraining.description[locale]}</span></p>
+            </article>
+          </section>
+
+          <section className="content-section page-shell language-section" id="languages" aria-labelledby="languages-title">
+            <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="languages-title" label={t.languages.eyebrow} title={t.languages.title} /></div>
+            </div>
+            <ul className="language-list" data-reveal>
+              {languages.map((language) => <li key={language.name.en}><span>{language.name[locale]}</span><span>{language.level[locale]}</span></li>)}
+            </ul>
+          </section>
+
           <section className="contact-section page-shell" id="contact" aria-labelledby="contact-title" data-reveal>
           <div>
             <p className="section-kicker">{t.contact.eyebrow}</p>
@@ -259,6 +351,15 @@ function App() {
           <a className="text-link text-link--accent" href={profile.github} target="_blank" rel="noreferrer noopener">
             <GithubMark size={16} />{t.contact.link}<ArrowUpRight size={14} aria-hidden="true" />
           </a>
+          <div className="contact-links">
+            <a className="text-link" href={`mailto:${profile.email}`}>{profile.email}</a>
+            <button className="contact-copy" type="button" onClick={copyEmail} aria-label={t.contact.emailCopy} title={t.contact.emailCopy}>
+              {emailCopyStatus === 'copied' ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+            </button>
+            <span className="contact-copy-status" role="status" aria-live="polite" aria-atomic="true">
+              {emailCopyStatus === 'copied' ? t.contact.emailCopied : emailCopyStatus === 'failed' ? t.contact.emailCopyFailed : ''}
+            </span>
+          </div>
         </section>
       </main>
 

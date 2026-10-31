@@ -43,7 +43,7 @@ The container is named `sl4dk1y-portfolio-preview`. `docker compose down` stops 
 
 ## Edit content
 
-- `src/content/portfolio.ts` holds the profile links, technologies, project descriptions and SEO copy.
+- `src/content/portfolio.ts` holds the profile links, technical skills, project descriptions, experience, education, training, languages and SEO copy.
 - `src/content/artworks.ts` is the source of truth for artwork metadata, image paths, authors, dates, source records, licenses and alt text.
 - `src/content/translations.ts` holds the English and Russian interface text.
 - `src/App.tsx` holds the page sections and theme, language and navigation controls.
@@ -52,13 +52,13 @@ The container is named `sl4dk1y-portfolio-preview`. `docker compose down` stops 
 - `public/images/` holds the local GitHub avatar and the Hero fallback artwork. Optimized artwork is stored under `public/artwork/`.
 - `index.html` includes an English static fallback for visitors who disable JavaScript; `public/noscript.css` styles that version.
 
-Add or remove a project in the `projects` array in `portfolio.ts`. Each item has a name, bilingual description, tags and public repository links. Keep the content limited to work that is public and approved to show.
+The page sections appear in this order: Hero, About, Projects, Technical Skills, Experience, Education, Additional Training, Languages and Contact. Update public copy in the typed content modules and keep the English and Russian text in step. Add or remove a project in the `projects` array in `portfolio.ts`. Each item has a name, bilingual description, tags and public repository links. Keep the content limited to work that is public and approved to show.
 
 Light mode is the default on a first visit. A chosen light or dark theme is saved in local storage. Language selection does not change the saved theme. The local avatar and favicon images were downloaded from `https://github.com/sl4dk1y.png`; replace `public/images/github-avatar.webp`, `public/favicon.png` and `public/apple-touch-icon.png` together if the GitHub avatar changes. The page shows a short initials fallback if the local avatar cannot load.
 
-The Hero chooses one of nineteen local botanical images when the page loads. It avoids the previous choice on a reload in the same tab, keeps the selection during language and theme changes, and loads only that image. The collection includes Pierre-Joseph Redouté's *Hundred-Leaved Rose* from plate 137 of *Choix des plus belles fleurs* (BHL item 45693, 1827), other botanical prints by Redouté, and flower works by Mark Catesby, Jacob Marrel and Clara Peeters. Sources and rights notes are listed in `src/content/artworks.ts` and on the [artwork credits page](public/artwork/credits.html). Images are local WebP files, so the site does not request them from an external archive at runtime.
+The Hero randomly selects one of 44 local floral works on page load. It avoids the previous choice on a reload in the same tab and keeps the selection through language and theme changes. The Ambient Gallery uses 70 locally stored works, with its file membership matching `public/artwork/ambient/`. The collections include botanical prints, landscapes, portraits and animals from documented open-access sources. Sources, image paths and rights notes are listed in `src/content/artworks.ts` and on the [artwork credits page](public/artwork/credits.html). Images are local WebP files, so the site does not request them from an external archive at runtime.
 
-The ambient collection has 80 local historical illustrations. At widths from 1680px, the page samples fourteen unique images and arranges them in two independently selected side compositions. Flowers and landscapes are favored, while insects and other fauna are limited. Different image sizes, rotations, overlaps and three depth levels keep the layout varied; it remains static and is omitted for reduced motion and narrower screens. Ambient images are decorative and use empty alt text. The public-domain status and source records for each image are listed on the [artwork credits page](public/artwork/credits.html).
+The ambient collection has 65 local non-floral historical works, including landscapes, architecture, portraits and animals. It includes 15 additions from The Met and the Art Institute of Chicago, both marked open access in their collection records. At widths from 1680px, the page samples fourteen unique images and arranges them in two independently selected side compositions. The collage remains static and is omitted for reduced motion and narrower screens. Ambient images are decorative and use empty alt text. The public-domain status and source records for each image are listed on the [artwork credits page](public/artwork/credits.html).
 
 The Open Graph card is a local 1200 by 630 PNG. Its editable vector source is `public/og-card.svg`.
 
