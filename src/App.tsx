@@ -349,10 +349,10 @@ function App() {
             <p className="contact-description">{t.contact.intro}</p>
           </div>
           <a className="text-link text-link--accent" href={profile.github} target="_blank" rel="noreferrer noopener">
-            <GithubMark size={16} />{t.contact.link}<ArrowUpRight size={14} aria-hidden="true" />
+            <GithubMark size={16} /><span className="contact-link-label">{t.contact.link}</span><ArrowUpRight size={14} aria-hidden="true" />
           </a>
           <div className="contact-links">
-            <a className="text-link" href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a className="text-link" href={`mailto:${profile.email}`}><span className="contact-link-label">{profile.email}</span></a>
             <button className="contact-copy" type="button" onClick={copyEmail} aria-label={t.contact.emailCopy} title={t.contact.emailCopy}>
               {emailCopyStatus === 'copied' ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
             </button>

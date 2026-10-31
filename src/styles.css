@@ -132,11 +132,13 @@ button { border: 0; }
 .contact-section { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding-block: 35px 40px; border-top: 1px solid var(--border); }
 .contact-section h2 { margin-top: 5px; }
 .contact-description { margin: 7px 0 0; color: var(--muted); font-size: 14px; }
-.contact-section > a { min-height: 34px; }
-.contact-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
-.contact-copy { display: inline-grid; width: 44px; height: 44px; flex: none; place-items: center; padding: 0; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer; transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease; }
+.contact-section > a, .contact-links { align-self: baseline; }
+.contact-section > a { min-height: 34px; align-items: baseline; }
+.contact-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.contact-copy { display: inline-grid; width: 44px; height: 44px; flex: none; align-self: center; place-items: center; padding: 0; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer; transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease; }
 .contact-copy:hover { border-color: var(--border); background: var(--surface); color: var(--text); }
 .contact-copy-status { flex-basis: 100%; color: var(--muted); font-size: 12px; }
+.contact-copy-status:empty { flex-basis: 0; }
 .site-footer { display: flex; min-height: 58px; align-items: center; gap: 16px; border-top: 1px solid var(--border); color: var(--subtle); font-size: 12px; }
 .footer-brand { color: var(--text); font-weight: 600; }
 .footer-credits { transition: color 150ms ease; }
@@ -211,7 +213,8 @@ button { border: 0; }
   .project-card { padding: 17px; }
   .project-description { margin-bottom: 13px; }
   .contact-section { align-items: start; flex-direction: column; gap: 12px; padding-block: 27px 31px; }
-  .contact-links { gap: 0 14px; }
+  .contact-section > a, .contact-links { align-self: flex-start; }
+  .contact-links { align-items: center; gap: 0 14px; }
   .site-footer { min-height: 54px; gap: 8px 13px; font-size: 11px; }
   .site-footer > span { margin-left: auto; }
 }

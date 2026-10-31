@@ -29,7 +29,7 @@ export const translations = {
     about: {
         eyebrow: 'INTRODUCTION',
         title: 'About me',
-      body: 'I study applied artificial intelligence at Penza State University. My work and studies focus on AI engineering and backend development, with interests in LLMs, RAG, and practical software tools.',
+      body: 'I study artificial intelligence and build backend services and automation tools. My interests include machine learning, working with data, and engineering applications powered by language models.',
     },
     stack: {
         eyebrow: 'TOOLS & TECHNOLOGIES',
@@ -106,7 +106,7 @@ export const translations = {
     about: {
         eyebrow: 'ЗНАКОМСТВО',
         title: 'Обо мне',
-      body: 'Изучаю прикладной искусственный интеллект в Пензенском государственном университете. Занимаюсь AI Engineering и backend-разработкой, интересуюсь LLM, RAG и практическими программными инструментами.',
+      body: 'Изучаю искусственный интеллект, разрабатываю backend-сервисы и инструменты автоматизации. Интересуюсь машинным обучением, работой с данными и инженерией приложений на базе языковых моделей.',
     },
     stack: {
         eyebrow: 'ИНСТРУМЕНТЫ И ТЕХНОЛОГИИ',
