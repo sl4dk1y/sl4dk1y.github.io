@@ -1,0 +1,275 @@
+import { useEffect, useState } from 'react'
+import { ArrowDownRight, ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { AmbientGallery } from './components/AmbientGallery'
+import { fallbackHeroArtwork, heroArtworks } from './content/artworks'
+import { profile, projects, seo, technologyCategories } from './content/portfolio'
+import { translations } from './content/translations'
+import type { Locale, Theme } from './content/types'
+import './fonts.css'
+
+const avatarUrl = profile.avatar
+
+function readLocale(): Locale {
+  try {
+    const storedLocale = window.localStorage.getItem('portfolio-locale')
+    if (storedLocale === 'en' || storedLocale === 'ru') return storedLocale
+  } catch {
+    // The default language remains available when storage is blocked.
+  }
+  return 'en'
+}
+
+function chooseHeroArtwork() {
+  if (heroArtworks.length === 0 || typeof window === 'undefined') return fallbackHeroArtwork
+
+  try {
+    const previousId = window.sessionStorage.getItem('portfolio-hero-artwork')
+    const candidates = heroArtworks.length > 1
+      ? heroArtworks.filter((artwork) => artwork.id !== previousId)
+      : heroArtworks
+    const selected = candidates[Math.floor(Math.random() * candidates.length)] ?? fallbackHeroArtwork
+    window.sessionStorage.setItem('portfolio-hero-artwork', selected.id)
+    return selected
+  } catch {
+    return heroArtworks[Math.floor(Math.random() * heroArtworks.length)] ?? fallbackHeroArtwork
+  }
+}
+
+const selectedHeroArtwork = chooseHeroArtwork()
+
+function Avatar({ size = 'large' }: { size?: 'large' | 'small' }) {
+  const [failed, setFailed] = useState(false)
+
+  return (
+    <span className={`avatar avatar--${size}`} aria-hidden="true">
+      {failed ? (
+        <span className="avatar__fallback">sl</span>
+      ) : (
+          <img src={avatarUrl} alt="" width={size === 'large' ? 88 : 30} height={size === 'large' ? 88 : 30} loading={size === 'large' ? 'eager' : 'lazy'} fetchPriority={size === 'large' ? 'high' : 'auto'} decoding="async" onError={() => setFailed(true)} />
+      )}
+    </span>
+  )
+}
+
+function GithubMark({ size = 17 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.33-3.8-1.33-.5-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 .1.77 1.98 3.02 1.4.1-.73.4-1.22.73-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.44.11-2.99 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.64 0c2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.99.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z" /></svg>
+}
+
+function SectionTitle({ id, label, title }: { id: string; label: string; title: string }) {
+  return (
+    <header className="section-title">
+      <p className="section-kicker">{label}</p>
+      <h2 id={id}>{title}</h2>
+    </header>
+  )
+}
+
+function App() {
+  const [locale, setLocale] = useState<Locale>(readLocale)
+  const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
+    const [heroArtwork, setHeroArtwork] = useState(selectedHeroArtwork)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const t = translations[locale]
+
+  useEffect(() => {
+    document.documentElement.lang = locale
+    document.title = seo.title[locale]
+    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+    const ogTitle = document.querySelector<HTMLMetaElement>('meta[property="og:title"]')
+    const ogDescription = document.querySelector<HTMLMetaElement>('meta[property="og:description"]')
+    const twitterTitle = document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')
+    const twitterDescription = document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')
+    if (description) description.content = seo.description[locale]
+    if (ogTitle) ogTitle.content = seo.title[locale]
+    if (ogDescription) ogDescription.content = seo.description[locale]
+    if (twitterTitle) twitterTitle.content = seo.title[locale]
+    if (twitterDescription) twitterDescription.content = seo.description[locale]
+  }, [locale])
+
+    useEffect(() => {
+      if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]')
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        })
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+      targets.forEach((target) => observer.observe(target))
+      return () => observer.disconnect()
+    }, [])
+
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [])
+
+  const changeTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.dataset.theme = nextTheme
+    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    if (themeColor) themeColor.content = nextTheme === 'dark' ? '#100D10' : '#FAF7F8'
+    try {
+      localStorage.setItem('portfolio-theme', nextTheme)
+    } catch {
+      // The page still changes theme when storage is unavailable.
+    }
+    setTheme(nextTheme)
+  }
+
+  const changeLocale = () => {
+    const nextLocale: Locale = locale === 'en' ? 'ru' : 'en'
+    try {
+      window.localStorage.setItem('portfolio-locale', nextLocale)
+    } catch {
+      // The current page still changes language when storage is unavailable.
+    }
+    setLocale(nextLocale)
+  }
+
+  const navigation = [
+    { id: 'about', label: t.nav.about },
+    { id: 'stack', label: t.nav.stack },
+    { id: 'projects', label: t.nav.projects },
+    { id: 'contact', label: t.nav.contact },
+  ]
+
+  return (
+    <>
+        <AmbientGallery />
+      <a className="skip-link" href="#main">{t.a11y.skip}</a>
+      <header className="site-header">
+        <div className="header-inner page-shell">
+          <a className="brand" href="#top" aria-label={`${profile.handle}, ${t.a11y.home}`}>
+            <Avatar size="small" />
+            <span>{profile.handle}</span>
+          </a>
+
+          <nav id="primary-nav" className={`primary-nav${menuOpen ? ' is-open' : ''}`} aria-label={t.a11y.navigation}>
+            {navigation.map((item) => (
+              <a key={item.id} href={`#${item.id}`} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="header-actions">
+            <a className="header-github" href={profile.github} target="_blank" rel="noreferrer noopener" aria-label={t.a11y.githubNewTab}>
+              <GithubMark size={17} /><span>GitHub</span><ArrowUpRight size={13} aria-hidden="true" />
+            </a>
+            <span className="header-divider" aria-hidden="true" />
+              <button className="locale-toggle" type="button" onClick={changeLocale} aria-label={`${t.a11y.switchLanguage} ${t.language}`}>
+              <span className={locale === 'en' ? 'is-current' : ''}>EN</span><span aria-hidden="true">/</span><span className={locale === 'ru' ? 'is-current' : ''}>RU</span>
+            </button>
+            <button className="icon-button theme-toggle" type="button" onClick={changeTheme} aria-label={theme === 'dark' ? t.theme.light : t.theme.dark} aria-pressed={theme === 'light'} title={theme === 'dark' ? t.theme.light : t.theme.dark}>
+              {theme === 'dark' ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
+            </button>
+            <button className="icon-button menu-toggle" type="button" aria-label={menuOpen ? t.nav.close : t.nav.menu} aria-expanded={menuOpen} aria-controls="primary-nav" onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main id="main">
+          <section className="hero page-shell" id="top" aria-labelledby="hero-title">
+            <div className="hero__copy" data-hero-enter>
+              <div className="hero__identity">
+                <Avatar />
+                <div>
+                  <p className="hero__handle">{profile.handle}</p>
+                  <p className="hero__location">{t.hero.student}</p>
+                </div>
+            </div>
+              <h1 id="hero-title">{t.hero.specialty}</h1>
+              <p className="hero__intro">{t.hero.intro}</p>
+              <div className="hero__links">
+                <a className="text-link text-link--accent" href="#projects">{t.hero.projects}<ArrowDownRight size={15} aria-hidden="true" /></a>
+                <a className="text-link" href={profile.github} target="_blank" rel="noreferrer noopener">{t.hero.github}<ArrowUpRight size={14} aria-hidden="true" /></a>
+              </div>
+          </div>
+            <figure className="hero__artwork" data-reveal>
+                <img
+                  src={heroArtwork.src}
+                  alt={heroArtwork.alt[locale]}
+                  width={heroArtwork.width}
+                  height={heroArtwork.height}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  onError={() => {
+                    if (heroArtwork.id !== fallbackHeroArtwork.id) setHeroArtwork(fallbackHeroArtwork)
+                  }}
+                />
+                <figcaption><a href={heroArtwork.source} target="_blank" rel="noreferrer noopener"><span>{heroArtwork.attribution[locale]}</span><ArrowUpRight size={12} aria-hidden="true" /></a></figcaption>
+            </figure>
+        </section>
+
+        <section className="content-section page-shell about-section" id="about" aria-labelledby="about-title">
+            <div data-reveal><SectionTitle id="about-title" label={t.about.eyebrow} title={t.about.title} /></div>
+              <p className="about-copy" data-reveal>{t.about.body}</p>
+        </section>
+
+        <section className="content-section page-shell stack-section" id="stack" aria-labelledby="stack-title">
+          <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="stack-title" label={t.stack.eyebrow} title={t.stack.title} /></div>
+              <p className="section-description" data-reveal>{t.stack.intro}</p>
+          </div>
+          <div className="stack-grid">
+            {technologyCategories.map((category) => (
+                <section className="stack-group" data-reveal key={category.id} aria-labelledby={`stack-${category.id}`}>
+                <h3 id={`stack-${category.id}`}>{category.label[locale]}</h3>
+                <ul className="tech-list">{category.items.map((item) => <li key={item}>{item}</li>)}</ul>
+              </section>
+            ))}
+          </div>
+        </section>
+
+        <section className="content-section page-shell projects-section" id="projects" aria-labelledby="projects-title">
+          <div className="section-heading-row">
+              <div data-reveal><SectionTitle id="projects-title" label={t.projects.eyebrow} title={t.projects.title} /></div>
+              <p className="section-description" data-reveal>{t.projects.intro}</p>
+          </div>
+          <div className="projects-grid">
+            {projects.map((project) => (
+                <article className="project-card" data-reveal key={project.id}>
+                <p className="project-tags">{project.tags.join(' · ')}</p>
+                <h3>{project.name}</h3>
+                <p className="project-description">{project.description[locale]}</p>
+                <div className="project-links">
+                  {project.repositories.map((repository) => (
+                    <a href={repository.href} key={repository.href} target="_blank" rel="noreferrer noopener">{repository.label[locale]}<ArrowUpRight size={13} aria-hidden="true" /></a>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+          <section className="contact-section page-shell" id="contact" aria-labelledby="contact-title" data-reveal>
+          <div>
+            <p className="section-kicker">{t.contact.eyebrow}</p>
+            <h2 id="contact-title">{t.contact.title}</h2>
+            <p className="contact-description">{t.contact.intro}</p>
+          </div>
+          <a className="text-link text-link--accent" href={profile.github} target="_blank" rel="noreferrer noopener">
+            <GithubMark size={16} />{t.contact.link}<ArrowUpRight size={14} aria-hidden="true" />
+          </a>
+        </section>
+      </main>
+
+      <footer className="site-footer page-shell">
+        <a className="footer-brand" href="#top">{profile.handle}</a>
+        <p>{t.footer.note}</p>
+          <a className="footer-credits" href="/artwork/credits.html">{t.footer.artworkCredits}</a>
+        <span>© {new Date().getFullYear()}</span>
+      </footer>
+    </>
+  )
+}
+
+export default App

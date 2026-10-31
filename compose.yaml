@@ -1,0 +1,18 @@
+name: portfolio
+
+services:
+  portfolio-preview:
+    container_name: sl4dk1y-portfolio-preview
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: preview
+    ports:
+      - "127.0.0.1:${PREVIEW_PORT:-8080}:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://127.0.0.1/ || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

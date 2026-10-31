@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sl4dk1y.github.io/sitemap.xml

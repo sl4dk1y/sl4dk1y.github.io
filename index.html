@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FAF7F8" />
+    <script>
+      let theme = 'light'
+      try {
+        theme = localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light'
+      } catch {}
+      document.documentElement.dataset.theme = theme
+      document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#FAF7F8' : '#100D10'
+    </script>
+    <meta name="description" content="Applied Artificial Intelligence student interested in AI engineering, backend development, LLMs and RAG." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="sl4dk1y — Portfolio" />
+    <meta property="og:description" content="Applied Artificial Intelligence student interested in AI engineering, backend development, LLMs and RAG." />
+    <meta property="og:url" content="https://sl4dk1y.github.io/" />
+    <meta property="og:image" content="https://sl4dk1y.github.io/og-card.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="sl4dk1y, AI Engineering and Backend Development" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="sl4dk1y — Portfolio" />
+    <meta name="twitter:description" content="Applied Artificial Intelligence student interested in AI engineering, backend development, LLMs and RAG." />
+    <meta name="twitter:image" content="https://sl4dk1y.github.io/og-card.png" />
+    <link rel="canonical" href="https://sl4dk1y.github.io/" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <noscript><link rel="stylesheet" href="/noscript.css" /></noscript>
+    <title>sl4dk1y — Portfolio</title>
+  </head>
+  <body>
+    <noscript>
+      <main class="no-script-portfolio" id="main">
+        <header class="no-script-header no-script-shell">
+          <a class="no-script-brand" href="#top"><img src="/images/github-avatar.jpg" width="32" height="32" alt="" />sl4dk1y</a>
+          <nav aria-label="Main navigation"><a href="#about">About</a><a href="#stack">Stack</a><a href="#projects">Projects</a><a href="#contact">Contact</a></nav>
+        </header>
+        <section class="no-script-hero no-script-shell" id="top">
+          <div>
+            <div class="no-script-identity"><img src="/images/github-avatar.jpg" width="88" height="88" alt="" /><div><strong>sl4dk1y</strong><p>Applied Artificial Intelligence student</p></div></div>
+            <h1>AI Engineering &amp; Backend Development</h1>
+            <p>I build practical tools for working with LLMs and retrieval, and study how these systems fit together.</p>
+            <p class="no-script-links"><a href="#projects">Explore projects ↓</a><a href="https://github.com/sl4dk1y" rel="noreferrer">GitHub profile ↗</a></p>
+          </div>
+          <figure><img src="/images/red-frangipanni.webp" width="912" height="1200" alt="Hand-colored botanical plate of pink frangipanni blossoms and broad leaves." /><figcaption><a href="https://www.nga.gov/artworks/73658-red-frangipanni-plumeria-rubra" rel="noreferrer">Mark Catesby, 1731 to 1743 · NGA Open Access · public domain ↗</a></figcaption></figure>
+        </section>
+        <section class="no-script-section no-script-about no-script-shell" id="about">
+          <h2>What I study</h2><div><p>I study applied artificial intelligence and build practical tools around LLMs and RAG. I am interested in AI engineering and backend development.</p></div>
+        </section>
+        <section class="no-script-section no-script-shell" id="stack">
+          <div class="no-script-section-heading"><h2>Tools and methods</h2><p>A selection of languages, AI methods and software tools I work with.</p></div>
+          <div class="no-script-stack">
+            <section><h3>Languages</h3><p>Assembly · C · C++ · Python · Java · Kotlin · R · JavaScript · TypeScript</p></section>
+            <section><h3>Backend &amp; Testing</h3><p>FastAPI · REST API · GraphQL · Locust · WebSocket · aiogram · aiohttp · SQLAlchemy · Alembic · pytest</p></section>
+            <section><h3>AI Engineering</h3><p>RAG · SGR (Self-Generated Reasoning) · Fine-tuning</p></section>
+            <section><h3>AI / ML tools</h3><p>Langfuse · LiteLLM · PyTorch · FAISS · bm25s</p></section>
+            <section><h3>Infrastructure &amp; Tools</h3><p>Linux · Docker · PostgreSQL · MongoDB · MySQL · Git · systemd · Prometheus · Grafana · GitHub Actions · Nginx</p></section>
+          </div>
+        </section>
+        <section class="no-script-section no-script-shell" id="projects">
+          <div class="no-script-section-heading"><h2>Projects</h2><p>Public projects and skills for coding agents.</p></div>
+          <div class="no-script-projects">
+            <article><small>Python · ZIP</small><h3>SnapKeep</h3><p>A cross-platform command-line tool for creating timestamped ZIP snapshots of project folders, with configurable ignore rules.</p><a href="https://github.com/sl4dk1y/SnapKeep" rel="noreferrer">Repository ↗</a></article>
+            <article><small>Python · FAISS · PyTorch · BM25</small><h3>RAG Retrieval Research</h3><p>Compares BM25, dense and hybrid retrieval for Russian-language RAG, with experiment protocols, evaluation results and error analysis.</p><a href="https://github.com/sl4dk1y/rag-retrieval-research" rel="noreferrer">Repository ↗</a></article>
+            <article><small>AI agent skills · Markdown</small><h3>Agent Skills</h3><p>Three reusable skills for coding agents: a guided development workflow, codebase explanations with source references, and context carried between sessions.</p><p><a href="https://github.com/sl4dk1y/Agent-Safe-Flow" rel="noreferrer">Agent Safe Flow ↗</a> · <a href="https://github.com/sl4dk1y/Codebase-Atlas" rel="noreferrer">Codebase Atlas ↗</a> · <a href="https://github.com/sl4dk1y/Context-Waypoint" rel="noreferrer">Context Waypoint ↗</a></p></article>
+          </div>
+        </section>
+        <section class="no-script-contact no-script-shell" id="contact"><div><small>CONTACT</small><h2>My GitHub profile</h2><p>Public projects and skills are on my GitHub.</p></div><a href="https://github.com/sl4dk1y" rel="noreferrer">github.com/sl4dk1y ↗</a></section>
+        <footer class="no-script-footer no-script-shell"><strong>sl4dk1y</strong><span>Personal portfolio</span><a href="/artwork/credits.html">Artwork credits</a><span>© 2026</span></footer>
+      </main>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

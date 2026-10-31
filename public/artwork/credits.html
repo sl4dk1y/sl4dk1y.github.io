@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#100d10" />
+    <meta name="description" content="Sources, artists and rights for the historical artwork used in the sl4dk1y portfolio." />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <title>Artwork sources · sl4dk1y</title>
+    <script>
+      let theme = 'dark'
+      try { theme = localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark' } catch {}
+      document.documentElement.dataset.theme = theme
+      document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#faf7f8' : '#100d10'
+    </script>
+    <style>
+      :root, :root[data-theme='dark'] { color-scheme: dark; --bg: #100d10; --surface: #1b151a; --text: #f3edf0; --muted: #b5a8af; --accent: #e391aa; --border: #332730; }
+      :root[data-theme='light'] { color-scheme: light; --bg: #faf7f8; --surface: #fff; --text: #271d22; --muted: #6d6067; --accent: #852b49; --border: #e7dde2; }
+      * { box-sizing: border-box; }
+      body { max-width: 800px; margin: 0 auto; padding: 44px 24px 64px; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, sans-serif; }
+      a { color: var(--accent); text-underline-offset: 3px; }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      header { margin-bottom: 38px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+      header a { color: var(--text); }
+      h1, h2 { font-family: Georgia, serif; font-weight: 400; letter-spacing: -.025em; }
+      h1 { margin: 24px 0 8px; font-size: clamp(32px, 6vw, 44px); line-height: 1.1; }
+      h2 { margin: 0 0 15px; font-size: 26px; }
+      p { color: var(--muted); }
+      section { margin-top: 34px; }
+      ul { margin: 0; padding: 0; list-style: none; }
+      li { padding: 14px 0; border-top: 1px solid var(--border); }
+      li strong { display: block; color: var(--text); font-weight: 600; }
+      li p { margin: 3px 0 0; font-size: 14px; }
+      .home { display: inline-block; min-height: 40px; }
+      @media (max-width: 480px) { body { padding: 28px 18px 48px; } }
+    </style>
+  </head>
+  <body>
+    <header><a class="home" href="/">sl4dk1y portfolio</a></header>
+    <main>
+      <h1>Artwork sources</h1>
+      <p>Artwork is stored locally as optimized WebP files. Each page load selects one flower for the Hero. On screens 1680px and wider, the static side collage uses fourteen works from the local collection. It stays hidden at narrower widths and when reduced motion is enabled.</p>
+
+      <section aria-labelledby="hero-artwork">
+        <h2 id="hero-artwork">Hero collection</h2>
+        <ul>
+          <li><strong>Red Frangipanni (Plumeria rubra), Mark Catesby</strong><p>Published 1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73658-red-frangipanni-plumeria-rubra">NGA artwork record</a>.</p></li>
+          <li><strong>Rosa centifolia, Rosier à cent feuilles, Pierre-Joseph Redouté</strong><p>Plate 137 from <i>Choix des plus belles fleurs et des plus beaux fruits</i>, 1827. The scan is marked public domain as a mechanical reproduction; BHL also offers it under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>. This local WebP is resized and converted from the Commons image. <a href="https://commons.wikimedia.org/wiki/File:Choix_des_plus_belles_fleurs_(Plate_137)_(7851518482).jpg">Image and rights record</a>; <a href="https://www.biodiversitylibrary.org/item/45693">BHL item 45693</a>.</p></li>
+          <li><strong>Anemone simple, Pierre-Joseph Redouté</strong><p>Plate 107, 1827. Public domain. <a href="https://commons.wikimedia.org/wiki/File:Anemone_simple._Redout%C3%A9,_P.J.,_Choix_des_plus_belles_fleurs_et_des_plus_beaux_fruits_t._107_(1827).tiff">BHL scan and rights record</a>.</p></li>
+          <li><strong>Fritillaria imperialis var. jaune, Pierre-Joseph Redouté</strong><p>Plate 2, 1827. Public domain. <a href="https://commons.wikimedia.org/wiki/File:Fritillaria_imperialis_var._jaune._Redout%C3%A9,_Choix_des_plus_belles_fleurs_et_des_plus_beaux_fruits,_t._2,_P.J._(1827).tiff">BHL scan and rights record</a>.</p></li>
+          <li><strong>Tagetes, Pierre-Joseph Redouté</strong><p>Plate 99, 1827. Public domain. <a href="https://commons.wikimedia.org/wiki/File:Redout%C3%A9,_P.J.,_Choix_des_plus_belles_fleurs_et_des_plus_beaux_fruits,_t._99_(1827).png">BHL scan and rights record</a>.</p></li>
+          <li><strong>Erica Fulgida, Pierre-Joseph Redouté</strong><p>1813. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/697702">The Met artwork record</a>.</p></li>
+          <li><strong>Gloriosa Superba (Climbing Lily), Pierre-Joseph Redouté</strong><p>Circa 1810. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/697703">The Met artwork record</a>.</p></li>
+          <li><strong>“Empress Josephine” or Frankfort Rose, Pierre-Joseph Redouté</strong><p>1817 to 1824. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/762055">The Met artwork record</a>.</p></li>
+          <li><strong>Four Tulips, Jacob Marrel</strong><p>Circa 1635 to 1645. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/337769">The Met artwork record</a>.</p></li>
+          <li><strong>A Bouquet of Flowers, Clara Peeters</strong><p>Circa 1612. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/827660">The Met artwork record</a>.</p></li>
+          <li><strong>Pink Roses in a Vase, Attributed to Pierre Joseph Redouté</strong><p>1838. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/140352-pink-roses-vase">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-pink-roses-in-a-vase.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Gladiolus ringens, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205896-gladiolus-ringens">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-gladiolus-ringens.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Narcissus calathinus, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205897-narcissus-calathinus">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-narcissus-calathinus.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Iris Swertii, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205898-iris-swertii">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-iris-swertii.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Diasia iridifolia, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205899-diasia-iridifolia">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-diasia-iridifolia.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Iris curtopetala, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205900-iris-curtopetala">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-iris-curtopetala.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Sowerbaea juncea, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205901-sowerbaea-juncea">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-sowerbaea-juncea.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Tradescantia virginica, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/205902-tradescantia-virginica">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-tradescantia-virginica.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Iris ochroleuca, Pierre Joseph Redouté</strong><p>1802/1816. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/227489-iris-ochroleuca">NGA artwork record</a>. Local file: <code>/artwork/hero/nga-iris-ochroleuca.webp</code>. Resized and converted to WebP.</p></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ambient-artwork">
+        <h2 id="ambient-artwork">Ambient collection</h2>
+        <ul>
+          <li><strong>Plants of the coast of Coromandel, William Roxburgh</strong><p>1795 to 1819. Biodiversity Heritage Library image, licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>. The local file was resized and converted to WebP. <a href="https://commons.wikimedia.org/wiki/File:18th_century_illustration_plants_of_the_coast_of_Coromandel_Coast_India_Flora_Fruits_Flowers.jpg">Image and rights record</a>.</p></li>
+          <li><strong>Portrait of a Woman, French 18th Century</strong><p>Circa 1711. CC0, National Gallery of Art Open Access. <a href="https://commons.wikimedia.org/wiki/File:French_18th_Century,_Portrait_of_a_Woman,_c._1711,_NGA_32695.jpg">NGA image and rights record</a>.</p></li>
+          <li><strong>Portrait of a Young Woman, Jean-Auguste-Dominique Ingres</strong><p>Public domain. <a href="https://commons.wikimedia.org/wiki/File:Jean_Auguste_Dominique_Ingres_-_Portrait_of_a_Young_Woman_(formerly_thought_to_be_Mme_de_Sta%C3%ABl,_1766%E2%80%931817).jpg">Image and rights record</a>.</p></li>
+          <li><strong>The Vanelloe (Epidendrum Vanilla), Mark Catesby</strong><p>Published 1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73656-vanelloe-epidendrum-vanilla">NGA artwork record</a>.</p></li>
+          <li><strong>The Sole (Pleuronectes lunatus), Mark Catesby</strong><p>Published 1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73699-sole-pleuronectes-lunatus">NGA artwork record</a>.</p></li>
+          <li><strong>The Towhe Bird (Fringilla erythrophthalma), Mark Catesby</strong><p>Published 1754. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73702-towhe-bird-fringilla-erythrophthalma">NGA artwork record</a>.</p></li>
+          <li><strong>Brown Lark, William Home Lizars after John James Audubon</strong><p>1827 to 1830. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73356-brown-lark">NGA artwork record</a>.</p></li>
+          <li><strong>The Natural History of British Butterflies, plate 13, Georges Cuvier and James Duncan</strong><p>Public domain. Digitized by the Biodiversity Heritage Library. <a href="https://commons.wikimedia.org/wiki/File:The_natural_history_of_British_butterflies_(Plate_13)_(6077216088).jpg">Image and rights record</a>.</p></li>
+          <li><strong>Centipede (Scolopendra morsitans), Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73665-centipede-scolopendra-morsitans">NGA artwork record</a>.</p></li>
+          <li><strong>The Black Muray, Mark Catesby</strong><p>Published 1754. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73690-black-muray-muraenae-helenae-varietas">NGA artwork record</a>.</p></li>
+          <li><strong>The Wood Pelican, Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73712-wood-pelican-tantalus-loculator">NGA artwork record</a>.</p></li>
+          <li><strong>The Hooping Crane, Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73653-hooping-crane-ardea-americana">NGA artwork record</a>.</p></li>
+          <li><strong>The Green Lizard of Jamaica, Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73641-green-lizard-jamaica-lacerta-bullaris">NGA artwork record</a>.</p></li>
+          <li><strong>The Ground Dove, Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73701-ground-dove-columba-passerina">NGA artwork record</a>.</p></li>
+          <li><strong>The Laughing Gull, Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73657-laughing-gull-larus-articilla">NGA artwork record</a>.</p></li>
+          <li><strong>The Yellow-breasted Chat, Mark Catesby</strong><p>Published 1731 to 1743. Public domain image, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73638-yellow-breasted-chat">NGA artwork record</a>.</p></li>
+          <li><strong>Song Sparrow, John James Audubon</strong><p>From <i>The Birds of America</i>, 1827 to 1838. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/918292">The Met artwork record</a>.</p></li>
+          <li><strong>Prairie Titlark, John James Audubon</strong><p>From <i>The Birds of America</i>, 1830. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/918311">The Met artwork record</a>.</p></li>
+          <li><strong>Pewee or Pewit Flycatcher, John James Audubon</strong><p>From <i>The Birds of America</i>, 1827 to 1838. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/918310">The Met artwork record</a>.</p></li>
+          <li><strong>Bay-breasted Warbler, John James Audubon</strong><p>From <i>The Birds of America</i>, 1829. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/918293">The Met artwork record</a>.</p></li>
+          <li><strong>Plate IV, Plate V and Plate IX, Franz Michael Regenfuss</strong><p>From <i>Choix de Coquillages et de Crustacés</i>, 1758. Public domain images, The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/824890">Plate IV</a>, <a href="https://www.metmuseum.org/art/collection/search/824891">Plate V</a> and <a href="https://www.metmuseum.org/art/collection/search/824893">Plate IX</a>.</p></li>
+          <li><strong>A Stag Beetle, Pierre-Joseph Redouté</strong><p>Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/385472">The Met artwork record</a>.</p></li>
+          <li><strong>Studies of a Blue Beetle and Insects, Pieter Holsteyn II</strong><p>Circa 1650 to 1660. Public domain image released under CC0 by The Met Open Access. <a href="https://www.metmuseum.org/art/collection/search/385463">The Met artwork record</a>.</p></li>
+          <li><strong>Six Insects, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7862-six-insects">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-six-insects.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Moth and Three Butterflies, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7863-moth-and-three-butterflies">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-moth-three-butterflies.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Moth, Three Butterflies, and Two Beetles, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7865-moth-three-butterflies-and-two-beetles">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-moth-butterflies-beetles.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Dragonflies, a Bumble-Bee, and a Butterfly, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7866-dragonflies-bumble-bee-and-butterfly">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-dragonflies-bumblebee-butterfly.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Two Butterflies, a Wasp, and a Moth, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7867-two-butterflies-wasp-and-moth">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-butterflies-wasp-moth.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Three Moths, Two Butterflies, and a Bumble Bee, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7869-three-moths-two-butterflies-and-bumble-bee">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-moths-butterflies-bee.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Four Butterflies, Wenceslaus Hollar</strong><p>1646. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7870-four-butterflies">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-four-butterflies.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Two Dragonflies and Five Butterflies, Wenceslaus Hollar</strong><p>1644 to 1652. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7874-two-dragonflies-and-five-butterflies">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-dragonflies-five-butterflies.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Swallow-tailed Butterfly and Twelve Other Insects, Wenceslaus Hollar</strong><p>1644 to 1652. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/7875-swallow-tailed-butterfly-and-twelve-other-insects">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-swallowtail-butterfly-insects.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Buffel's Head Duck (Anas bucephala), Mark Catesby</strong><p>1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73636-buffels-head-duck-anas-bucephala">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-buffels-head-duck.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Rock Fish (Perca venenosa), Mark Catesby</strong><p>1754. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73637-rock-fish-perca-venenosa">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-rock-fish.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Soree (Rallus Virginianus), Mark Catesby</strong><p>1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73639-soree-rallus-virginianus">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-soree.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Oyster-catcher (Hoematopus ostralegus), Mark Catesby</strong><p>1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73640-oyster-catcher-hoematopus-ostralegus">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-oyster-catcher.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Lyon Lizard (Lacerta 6-lineata), Mark Catesby</strong><p>1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73642-lyon-lizard-lacerta-6-lineata">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-lyon-lizard.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Land Frog (Rana), Mark Catesby</strong><p>1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73644-land-frog-rana">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-land-frog.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Bahama Coney (Mus Monax), Mark Catesby</strong><p>1754. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73645-bahama-coney-mus-monax">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-bahama-coney.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Swallow Tail Hawk (Falco furcatus), Mark Catesby</strong><p>1754. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73649-swallow-tail-hawk-falco-furcatus">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-swallow-tail-hawk.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>The Red Winged Starling (Oriolus phoeniceus), Mark Catesby</strong><p>1754. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73650-red-winged-starling-oriolus-phoeniceus">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-red-winged-starling.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Cat's Claw (Mimosa circinalis), Mark Catesby</strong><p>1731 to 1743. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73659-cats-claw-mimosa-circinalis">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-cats-claw.webp</code>. Resized and converted to WebP.</p></li>
+          <li><strong>Cross-vine (Bignonia capreolata), Mark Catesby</strong><p>1754. Public domain, National Gallery of Art Open Access. <a href="https://www.nga.gov/artworks/73660-cross-vine-bignonia-capreolata">NGA artwork record</a>. Local file: <code>/artwork/ambient/nga-cross-vine.webp</code>. Resized and converted to WebP.</p></li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
