@@ -52,7 +52,9 @@ The container is named `sl4dk1y-portfolio-preview`. `docker compose down` stops 
 - `public/images/` holds the local GitHub avatar and the Hero fallback artwork. Optimized artwork is stored under `public/artwork/`.
 - `index.html` includes an English static fallback for visitors who disable JavaScript; `public/noscript.css` styles that version.
 
-The page sections appear in this order: Hero, About, Projects, Technical Skills, Experience, Education, Additional Training, Languages and Contact. Update public copy in the typed content modules and keep the English and Russian text in step. Add or remove a project in the `projects` array in `portfolio.ts`. Each item has a name, bilingual description, tags and public repository links. Keep the content limited to work that is public and approved to show.
+The page sections appear in this order: Hero, About, Projects, Technical Skills, Experience, Education, Additional Training, Languages and Contact. About copy is maintained in English and Russian in `src/content/translations.ts`; the English no-JavaScript fallback in `index.html` follows the English copy. Update public copy in the typed content modules and keep both languages in step. Add or remove a project in the `projects` array in `portfolio.ts`. Each item has a name, bilingual description, tags and public repository links. Keep the content limited to work that is public and approved to show.
+
+The Contact section places the GitHub profile and email next to its heading. An accessible button copies the email and announces success or failure in the selected language. On narrow screens, the section stacks its content.
 
 Light mode is the default on a first visit. A chosen light or dark theme is saved in local storage. Language selection does not change the saved theme. The local avatar and favicon images were downloaded from `https://github.com/sl4dk1y.png`; replace `public/images/github-avatar.webp`, `public/favicon.png` and `public/apple-touch-icon.png` together if the GitHub avatar changes. The page shows a short initials fallback if the local avatar cannot load.
 
