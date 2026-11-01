@@ -19,6 +19,8 @@
 - `index.html` — HTML-шаблон, начальные SEO-метаданные и англоязычный статический fallback.
 - `public/noscript.css` — оформление fallback-версии без JavaScript.
 - `public/images/` — локальные изображения профиля и Hero fallback.
+- `.github/avatar-source.sha256` — SHA-256 состояния текущей и, если доступна, предыдущей версии синхронизируемой GitHub-аватарки.
+- `.github/workflows/sync-avatar.yml`, `scripts/sync-github-avatar.mjs` и `scripts/sync-github-avatar.test.mjs` — автоматическая проверка и синхронизация локального WebP-аватара, а также её тесты.
 - `public/artwork/hero/` и `public/artwork/ambient/` — локальные WebP-иллюстрации Hero и Ambient Gallery.
 - `public/artwork/credits.html` — публичная страница источников и атрибуции иллюстраций.
 - `public/fonts/` — тексты лицензий для локальных шрифтов; сами WOFF2-файлы поставляются пакетами `@fontsource-variable`.
@@ -26,7 +28,7 @@
 - `design-system/sl4dk1y-portfolio/MASTER.md` — действующая визуальная спецификация проекта.
 - `vite.config.ts`, `tsconfig*.json`, `eslint.config.js` — конфигурации Vite, TypeScript и ESLint.
 - `Dockerfile`, `nginx.conf`, `compose.yaml` — multi-stage сборка и локальный Nginx preview.
-- `.github/workflows/pages.yml` — CI-проверки, сборка и деплой GitHub Pages.
+- `.github/workflows/pages.yml` — CI-проверки, сборка и деплой GitHub Pages при push в `main`, ручном `workflow_dispatch` и `repository_dispatch` с типом `avatar-updated`.
 
 Перед изменением выясни, какой файл является источником истины для данных. Не дублируй уже вынесенные в `src/content/` тексты и метаданные непосредственно в компонентах.
 
@@ -216,9 +218,9 @@ Compose собирает `Dockerfile` (Node.js 24 Alpine build stage и Nginx Al
 
 ## 16. GitHub Pages deployment и Git-политика
 
-GitHub Pages использует workflow `.github/workflows/pages.yml`: настраивает Node.js 24, выполняет `npm ci`, `npm run typecheck`, `npm run lint`, `npm run build`, загружает `dist/` и затем деплоит Pages artifact. Workflow запускается при push в `main` и через `workflow_dispatch`; следовательно, push в эту ветку способен автоматически опубликовать сайт. Vite `base` должен оставаться согласованным с целевым корневым доменом.
+GitHub Pages использует workflow `.github/workflows/pages.yml`: настраивает Node.js 24, выполняет `npm ci`, `npm run typecheck`, `npm run lint`, `npm run build`, загружает `dist/` и затем деплоит Pages artifact. Workflow запускается при push в `main`, через `workflow_dispatch` и через `repository_dispatch` с типом `avatar-updated`; последний checkout использует SHA коммита из payload. Push в `main` способен автоматически опубликовать сайт. Vite `base` должен оставаться согласованным с целевым корневым доменом.
 
-Все Git-операции выполняет исключительно пользователь. Агентам запрещено запускать `git add`, `git commit`, `git push`, `git merge`, `git rebase`, `git tag`, `git reset`, `git checkout` с изменением рабочего дерева, `git clean`, создавать релизы или публиковать сайт. Не изменяй историю Git. Разрешены только read-only проверки `git status`, `git diff`, `git log`, однако для задач, где они не нужны, не запускай их. Не запускай Pages workflow, `workflow_dispatch` или иные команды публикации без отдельного разрешения пользователя.
+Git write-операции в обычном рабочем процессе выполняет пользователь. Агентам запрещено вручную запускать `git add`, `git commit`, `git push`, `git merge`, `git rebase`, `git tag`, `git reset`, `git checkout` с изменением рабочего дерева, `git clean`, создавать релизы или публиковать сайт. Единственное автоматизированное исключение в проекте — owner-controlled workflow `.github/workflows/sync-avatar.yml`: при обнаружении изменений он использует ограниченный allowlist путей для коммита и push обновлённого аватара в `main`, после чего запрашивает Pages deployment через `repository_dispatch`. Агентам запрещено запускать этот workflow или инициировать публикацию без отдельного разрешения пользователя. Не изменяй историю Git. Разрешены только read-only проверки `git status`, `git diff`, `git log`, однако для задач, где они не нужны, не запускай их.
 
 ## 17. Проверки перед завершением задачи
 

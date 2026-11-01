@@ -38,8 +38,8 @@ These semantic variables are declared in `src/styles.css` under `data-theme`. Us
 ## Layout and components
 
 - Main content width: up to 1240px with fluid side gutters. Keep paragraph measure around 60–75ch.
-- A compact sticky header contains an avatar and handle, section links, language control and theme control.
-- The Hero places the avatar, handle, study context, specialty heading, introduction and two links beside a locally stored floral work selected from the 44-item Hero collection on page load. Keep the selection stable during language and theme changes. The local fallback is used if the selected file cannot load.
+- A compact sticky header contains an avatar and handle, section links, language control and theme control. Use the locally stored, SHA-256-versioned WebP avatar as the primary visual asset.
+- The Hero places the avatar, handle, study context, specialty heading, introduction and two links beside a locally stored floral work selected from the 44-item Hero collection on page load. Keep the selection stable during language and theme changes. The avatar uses the current local image, with a previous local image available as fallback when present.
 - Keep section order as About, Projects, Technical Skills, Experience, Education, Additional Training, Languages and Contact. Use short descriptive eyebrow labels that add context without repeating the section title.
 - About is one short paragraph about applied AI studies and current technical interests.
 - Projects use short cards with description, tags and repository links. No image placeholders.
@@ -79,7 +79,7 @@ The Hero figure uses a reserved layout height: `clamp(360px, 32vw, 440px)` above
 
 ## External assets
 
-The profile avatar first loads from `https://github.com/sl4dk1y.png` and then falls back to a local WebP; a compact initials mark appears if both fail. `public/favicon.png` and `public/apple-touch-icon.png` are local copies of the avatar. The Hero collection contains 44 local floral works; the first item, Mark Catesby's *Red Frangipanni*, is the fallback. Its public-domain source is the National Gallery of Art Open Access collection. Runtime artwork paths, dimensions, sources, licenses and attribution are maintained in `src/content/artworks.ts` and `public/artwork/credits.html`.
+The Header and Hero load the current SHA-256-versioned local WebP avatar first. If it fails, the React page tries the previous local WebP when available, then the public GitHub avatar URL, then a compact centered `sl` initials mark. Keep the circular avatar container and its reserved dimensions stable so image failure or fallback does not shift surrounding content. The Header avatar is 30px square (28px at 520px and below); the Hero avatar is 88px square (72px at 800px and below, 64px at 520px and below). The initials fallback uses the existing raised surface, accent text and centered serif treatment; preserve the same circular clipping and sizing as the image. The static no-JavaScript page uses the current local WebP directly. `public/favicon.png` and `public/apple-touch-icon.png` remain static, locally stored avatar-derived icons and are not updated by avatar synchronization. The Hero collection contains 44 local floral works; the first item, Mark Catesby's *Red Frangipanni*, is the fallback. Its public-domain source is the National Gallery of Art Open Access collection. Runtime artwork paths, dimensions, sources, licenses and attribution are maintained in `src/content/artworks.ts` and `public/artwork/credits.html`.
 
 ## Release v1.0.2
 
