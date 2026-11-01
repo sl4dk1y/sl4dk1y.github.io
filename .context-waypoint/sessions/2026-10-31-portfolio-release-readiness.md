@@ -1,5 +1,7 @@
 # Portfolio release readiness
 
+Historical checkpoint from before v1.0.2. The artwork counts, release status and follow-ups below describe that earlier state; use the latest Context Waypoint session for current project status.
+
 ## Outcome
 
 Completed the portfolio visual polish, expanded the local artwork collections, and refreshed the Docker preview. The latest user-requested stack additions are present in the React content and no-JavaScript fallback.
