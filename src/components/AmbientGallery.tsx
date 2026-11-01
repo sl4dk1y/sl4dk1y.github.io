@@ -184,29 +184,53 @@ function createComposition(): CollageItem[] {
 
 const composition = createComposition()
 
+type ViewportSize = { width: number; height: number; topInset: number }
+
 function useAmbientGalleryEnabled() {
   const [enabled, setEnabled] = useState(false)
+  const [viewport, setViewport] = useState<ViewportSize>({ width: 0, height: 0, topInset: 0 })
 
   useEffect(() => {
     const wideScreen = window.matchMedia('(min-width: 1680px)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const update = () => setEnabled(wideScreen.matches && !reducedMotion.matches)
+    const update = () => {
+      setEnabled(wideScreen.matches && !reducedMotion.matches)
+      const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 0
+      setViewport({ width: window.innerWidth, height: window.innerHeight, topInset: headerHeight })
+    }
 
     update()
     wideScreen.addEventListener('change', update)
     reducedMotion.addEventListener('change', update)
+    window.addEventListener('resize', update)
     return () => {
       wideScreen.removeEventListener('change', update)
       reducedMotion.removeEventListener('change', update)
+      window.removeEventListener('resize', update)
     }
   }, [])
 
-  return enabled
+  return { enabled, viewport }
+}
+
+function getVisibleTop(item: CollageItem, viewport: ViewportSize) {
+  const ratio = item.artwork.width / item.artwork.height
+  const sideWidth = Math.min(viewport.width * 0.16, (viewport.width - 1240) / 2 - 44)
+  const frameWidth = Math.min(sideWidth * item.width / 100, ratio * viewport.height * 0.28)
+  const frameHeight = frameWidth / ratio
+  const angle = Math.abs(item.rotation) * Math.PI / 180
+  const rotatedHeight = frameHeight * Math.cos(angle) + frameWidth * Math.sin(angle)
+  const verticalBleed = Math.max(0, (rotatedHeight - frameHeight) / 2) + 1
+  const requestedTop = item.y * viewport.height / 100
+  const minTop = viewport.topInset + verticalBleed
+  const maxTop = viewport.height - frameHeight - verticalBleed
+
+  return Math.min(Math.max(requestedTop, minTop), maxTop)
 }
 
 export function AmbientGallery() {
-  const enabled = useAmbientGalleryEnabled()
-  if (!enabled) return null
+  const { enabled, viewport } = useAmbientGalleryEnabled()
+  if (!enabled || viewport.width === 0 || viewport.height === 0) return null
 
   return (
     <div className="ambient-gallery" aria-hidden="true">
@@ -218,7 +242,7 @@ export function AmbientGallery() {
             className={`ambient-gallery__frame ambient-gallery__frame--${item.depth}`}
             style={{
               left: `${item.x}%`,
-              top: `${item.y}%`,
+              top: `${getVisibleTop(item, viewport)}px`,
               width: `${item.width}%`,
               maxWidth: `${(item.artwork.width / item.artwork.height) * 28}vh`,
               aspectRatio: `${item.artwork.width} / ${item.artwork.height}`,
