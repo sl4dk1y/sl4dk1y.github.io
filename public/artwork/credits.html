@@ -1,26 +1,80 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="day">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#100d10" />
+    <meta name="theme-color" content="#FAF7F8" />
     <meta name="description" content="Sources, artists and rights for the historical artwork used in the sl4dk1y portfolio." />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <title>Artwork sources · sl4dk1y</title>
     <script>
-      let theme = 'dark'
-      try { theme = localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark' } catch {}
-      document.documentElement.dataset.theme = theme
-      document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#faf7f8' : '#100d10'
+      (() => {
+        const themeBackgrounds = {
+          day: '#FAF7F8',
+          sunset: '#FBF5F1',
+          forest: '#F4F7F2',
+          rain: '#F3F6F8',
+          night: '#100D10',
+        }
+        let storedTheme = null
+        try { storedTheme = localStorage.getItem('portfolio-theme') } catch {}
+        const migratedTheme = storedTheme === 'light' ? 'day' : storedTheme === 'dark' ? 'night' : storedTheme
+        const theme = Object.prototype.hasOwnProperty.call(themeBackgrounds, migratedTheme) ? migratedTheme : 'day'
+        document.documentElement.dataset.theme = theme
+        if (storedTheme !== null && storedTheme !== theme) {
+          try { localStorage.setItem('portfolio-theme', theme) } catch {}
+        }
+        document.querySelector('meta[name="theme-color"]').content = themeBackgrounds[theme]
+      })()
     </script>
     <style>
-      :root, :root[data-theme='dark'] { color-scheme: dark; --bg: #100d10; --surface: #1b151a; --text: #f3edf0; --muted: #b5a8af; --accent: #e391aa; --border: #332730; }
-      :root[data-theme='light'] { color-scheme: light; --bg: #faf7f8; --surface: #fff; --text: #271d22; --muted: #6d6067; --accent: #852b49; --border: #e7dde2; }
+      :root, :root[data-theme='day'] {
+        color-scheme: light;
+        --bg: #FAF7F8; --surface: #FFFFFF; --surface-raised: #F4EDEF; --hover-surface: #F4EDEF;
+        --text: #271D22; --muted: #6D6067; --subtle: #786970;
+        --accent: #852B49; --accent-strong: #70223D; --accent-soft: rgb(133 43 73 / 7%);
+        --border: #E7DDE2; --border-strong: #D3C4CC; --focus: #852B49;
+        --selection-background: #852B49; --selection-foreground: #FFFFFF;
+      }
+      :root[data-theme='sunset'] {
+        color-scheme: light;
+        --bg: #FBF5F1; --surface: #FFFDFC; --surface-raised: #F5E7E2; --hover-surface: #F5E7E2;
+        --text: #2E201E; --muted: #6B5652; --subtle: #755F5A;
+        --accent: #7F3B3D; --accent-strong: #7F3B3D; --accent-soft: rgb(127 59 61 / 8%);
+        --border: #E8D7D1; --border-strong: #CDB2AA; --focus: #7F3B3D;
+        --selection-background: #7F3B3D; --selection-foreground: #FFFFFF;
+      }
+      :root[data-theme='forest'] {
+        color-scheme: light;
+        --bg: #F4F7F2; --surface: #FFFFFF; --surface-raised: #EAF1EB; --hover-surface: #EAF1EB;
+        --text: #202A23; --muted: #56665B; --subtle: #5E6C61;
+        --accent: #356146; --accent-strong: #356146; --accent-soft: rgb(53 97 70 / 8%);
+        --border: #D8E1D9; --border-strong: #B7C8B9; --focus: #356146;
+        --selection-background: #356146; --selection-foreground: #FFFFFF;
+      }
+      :root[data-theme='rain'] {
+        color-scheme: light;
+        --bg: #F3F6F8; --surface: #FFFFFF; --surface-raised: #E7EEF2; --hover-surface: #E7EEF2;
+        --text: #20282E; --muted: #56646D; --subtle: #5E6D76;
+        --accent: #3B6076; --accent-strong: #3B6076; --accent-soft: rgb(59 96 118 / 8%);
+        --border: #D7E0E6; --border-strong: #B7C8D1; --focus: #355B72;
+        --selection-background: #3B6076; --selection-foreground: #FFFFFF;
+      }
+      :root[data-theme='night'] {
+        color-scheme: dark;
+        --bg: #100D10; --surface: #1B151A; --surface-raised: #241A21; --hover-surface: #241A21;
+        --text: #F3EDF0; --muted: #B5A8AF; --subtle: #8F8088;
+        --accent: #C15375; --accent-strong: #E391AA; --accent-soft: rgb(158 53 88 / 16%);
+        --border: #332730; --border-strong: #55404B; --focus: #EEA3B8;
+        --selection-background: #BD496D; --selection-foreground: #FFFFFF;
+      }
       * { box-sizing: border-box; }
       body { max-width: 800px; margin: 0 auto; padding: 44px 24px 64px; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, sans-serif; }
-      a { color: var(--accent); text-underline-offset: 3px; }
-      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      a { color: var(--accent-strong); text-underline-offset: 3px; }
+      a:hover { color: var(--text); }
+      a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+      ::selection { background: var(--selection-background); color: var(--selection-foreground); }
       header { margin-bottom: 38px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
       header a { color: var(--text); }
       h1, h2 { font-family: Georgia, serif; font-weight: 400; letter-spacing: -.025em; }

@@ -1,0 +1,88 @@
+name: Sync GitHub avatar
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: avatar-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: true
+      - name: Install WebP encoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes webp
+      - name: Test avatar synchronization
+        run: node --test scripts/sync-github-avatar.test.mjs
+      - name: Synchronize avatar
+        id: sync
+        run: node scripts/sync-github-avatar.mjs
+      - name: Commit and push avatar files
+        id: commit
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          AVATAR_ASSET: ${{ steps.sync.outputs.asset }}
+          PREVIOUS_ASSET: ${{ steps.sync.outputs.previous }}
+          REMOVED_ASSETS: ${{ steps.sync.outputs.removed }}
+        run: |
+          set -euo pipefail
+          validate_avatar_path() {
+            [[ "$1" =~ ^public/images/github-avatar-[0-9a-f]{64}\.webp$ ]]
+          }
+          validate_avatar_path "$AVATAR_ASSET" || { echo "Unexpected current avatar path" >&2; exit 1; }
+          allowed_paths=(index.html src/content/portfolio.ts .github/avatar-source.sha256 "$AVATAR_ASSET")
+          if [[ -n "$PREVIOUS_ASSET" ]]; then
+            validate_avatar_path "$PREVIOUS_ASSET" || { echo "Unexpected previous avatar path" >&2; exit 1; }
+            allowed_paths+=( "$PREVIOUS_ASSET" )
+          fi
+          while IFS= read -r retired_path; do
+            [[ -z "$retired_path" ]] && continue
+            validate_avatar_path "$retired_path" || { echo "Unexpected retired avatar path" >&2; exit 1; }
+            allowed_paths+=( "$retired_path" )
+          done <<< "$REMOVED_ASSETS"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${allowed_paths[@]}"
+          while IFS= read -r staged_path; do
+            allowed=false
+            for allowed_path in "${allowed_paths[@]}"; do
+              [[ "$staged_path" == "$allowed_path" ]] && allowed=true
+            done
+            if [[ "$allowed" != true ]]; then
+              echo "Staged file allowlist validation failed" >&2
+              exit 1
+            fi
+          done < <(git diff --cached --name-only --no-renames)
+          git commit -m "chore: sync GitHub avatar"
+          git push origin HEAD:refs/heads/main
+          echo "pushed_commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Trigger GitHub Pages deployment
+        if: steps.sync.outputs.changed == 'true' && steps.commit.outputs.pushed_commit != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PUSHED_COMMIT: ${{ steps.commit.outputs.pushed_commit }}
+        run: |
+          for attempt in 1 2 3; do
+            if gh api --method POST "/repos/$GH_REPO/dispatches" -f event_type=avatar-updated -F "client_payload[commit]=$PUSHED_COMMIT"; then
+              exit 0
+            fi
+            if [[ "$attempt" -lt 3 ]]; then sleep 5; fi
+          done
+          echo "GitHub Pages dispatch failed; run the Pages workflow manually" >&2
+          exit 1

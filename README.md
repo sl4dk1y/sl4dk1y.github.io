@@ -46,6 +46,7 @@ The container is named `sl4dk1y-portfolio-preview`. `docker compose down` stops 
 - `src/content/portfolio.ts` holds the profile links, technical skills, project descriptions, experience, education, training, languages and SEO copy.
 - `src/content/artworks.ts` is the source of truth for artwork metadata, image paths, authors, dates, source records, licenses and alt text.
 - `src/content/translations.ts` holds the English and Russian interface text.
+- `src/content/types.ts` defines the locale type and the ordered five-theme cycle used by the theme selector.
 - `src/App.tsx` holds the page sections and theme, language and navigation controls.
 - `src/styles.css` holds the layout, responsive rules, color themes and reduced-motion-aware reveal effects.
 - `src/fonts.css` loads the selected local font subsets.
@@ -56,7 +57,13 @@ The page sections appear in this order: Hero, About, Projects, Technical Skills,
 
 The Contact section places the GitHub profile and email next to its heading. An accessible button copies the email and announces success or failure in the selected language. On narrow screens, the section stacks its content.
 
-Light mode is the default on a first visit. A chosen light or dark theme is saved in local storage. Language selection does not change the saved theme. The local avatar and favicon images were downloaded from `https://github.com/sl4dk1y.png`; replace `public/images/github-avatar.webp`, `public/favicon.png` and `public/apple-touch-icon.png` together if the GitHub avatar changes. The page shows a short initials fallback if the local avatar cannot load.
+The interface supports English and Russian. It stores the selected language under `portfolio-locale`; changing languages leaves the selected theme unchanged.
+
+The header theme button cycles through Day, Sunset, Forest, Rain and Night, then returns to Day. Day is the first-visit default. The page stores the selected theme under `portfolio-theme` and applies it before React renders. Existing `light` and `dark` values are migrated to Day and Night. The active theme has its own icon. Five small indicators and a localized tooltip appear on pointer hover or keyboard focus. The button's accessible name reports the current theme, its position in the cycle and the next theme.
+
+The theme button is 44 by 44 pixels. Other header controls are at least 40 pixels high, primary text links are 40 pixels high, and mobile navigation links are 44 pixels high. Keyboard focus has a visible outline. Each theme sets dedicated foreground and background colors for text selection and its own focus color. At widths up to 800px, navigation switches to a menu; at 520px and below, the Hero and content use a single-column layout. The English no-JavaScript fallback uses the static Day palette; theme switching requires JavaScript.
+
+The local avatar and favicon images were downloaded from `https://github.com/sl4dk1y.png`; replace `public/images/github-avatar.webp`, `public/favicon.png` and `public/apple-touch-icon.png` together if the GitHub avatar changes. The page shows a short initials fallback if the local avatar cannot load.
 
 The Hero selects one of 44 local floral works on page load. It avoids the previous choice on a reload in the same tab and keeps the selection through language and theme changes. If the selected image fails to load, the page uses the local Hero fallback. The Ambient Gallery catalog has 70 local works, with its file membership matching `public/artwork/ambient/`. At viewport widths of at least 1680px, the page selects fourteen unique works and places seven in each of two independently chosen side compositions. The gallery is static, omitted for reduced motion and narrower screens, and its decorative images use empty alt text. Artwork records, image paths, source details and rights notes are listed in `src/content/artworks.ts` and on the [artwork credits page](public/artwork/credits.html). The site serves artwork from local WebP files rather than requesting them from an external archive at runtime.
 
@@ -64,7 +71,7 @@ The Open Graph card is a local 1200 by 630 PNG. Its editable vector source is `p
 
 ## Architecture
 
-`src/main.tsx` mounts the React app. `src/App.tsx` renders the page sections and interactions; `src/content/` holds typed profile, project, translation and artwork data; `src/styles.css` defines layout, responsive rules, themes and reveal effects. `index.html` contains the English no-JavaScript page and initializes the saved theme before React renders. Vite builds the static site for the root URL `https://sl4dk1y.github.io/`.
+`src/main.tsx` mounts the React app. `src/App.tsx` renders the page sections and interactions; `src/content/` holds typed profile, project, translation, artwork and theme-cycle data; `src/styles.css` defines layout, responsive rules, five semantic color themes and reveal effects. `index.html` migrates legacy theme values and applies the saved theme before React renders. Vite builds the static site for the root URL `https://sl4dk1y.github.io/`.
 
 ## Release v1.0.2
 

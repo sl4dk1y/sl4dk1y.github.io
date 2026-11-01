@@ -8,7 +8,7 @@ import { themeCycle, type Locale, type Theme } from './content/types'
 import './fonts.css'
 
 const avatarUrl = profile.avatar
-const avatarSources = [profile.githubAvatar, avatarUrl]
+const avatarSources = [avatarUrl, profile.avatarFallback, profile.githubAvatar].filter((source) => source.length > 0)
 const themeIcons: Record<Theme, LucideIcon> = {
   day: Sun,
   sunset: Sunset,
@@ -68,9 +68,9 @@ function Avatar({ size = 'large' }: { size?: 'large' | 'small' }) {
           alt=""
           width={size === 'large' ? 88 : 30}
           height={size === 'large' ? 88 : 30}
-          loading={size === 'large' ? 'eager' : 'lazy'}
-          fetchPriority={size === 'large' ? 'high' : 'auto'}
+          loading="eager"
           decoding="async"
+          fetchPriority={size === 'large' ? 'high' : 'auto'}
           onError={() => setSourceIndex((current) => current + 1)}
         />
       )}

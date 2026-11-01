@@ -4,7 +4,8 @@ export const profile = {
   handle: 'sl4dk1y',
   github: 'https://github.com/sl4dk1y',
   githubAvatar: 'https://github.com/sl4dk1y.png?size=128',
-  avatar: '/images/github-avatar.webp',
+  avatar: '/images/github-avatar-14b5d978365f044516cedb3805f2aec6db3d8c5e5cae042007994d69e18cf022.webp',
+  avatarFallback: '',
   email: 'sweetbusiness@duck.com',
 }
 
