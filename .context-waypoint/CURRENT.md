@@ -2,33 +2,32 @@
 
 ## Objective
 
-Preserve verified project state after release v1.0.2 and its documentation update.
+Preserve verified project context after the v1.1.0 functional changes and documentation update.
 
 ## Status
 
-- Tag `v1.0.2` points to release commit `ef1c73b382ca5cdb935c9ca899483e7f7d86c9f7`.
-- Branch `main` is at `8848513a430f6f7d29779d0a8b6bb7fce5e90b68` (`docs: synchronize documentation with v1.0.2`), the same commit as `origin/main`. That documentation commit follows the release commit and updates `README.md`, `design-system/sl4dk1y-portfolio/MASTER.md` and `public/artwork/credits.html`.
-- The worktree was clean before this Context Waypoint update. This task leaves only Context Waypoint edits uncommitted.
-- The site remains a static React 19, TypeScript and Vite portfolio for root deployment at `https://sl4dk1y.github.io/`. See [the v1.0.2 audit summary](sessions/2026-11-01-post-release-v1.0.2-context-sync.md) and the source references there.
-- `README.md` records that local `npm run typecheck`, `npm run lint` and `npm run build` passed during documentation verification after the release. No release-specific GitHub Actions result or current public deployment has been verified.
+- `package.json` declares `1.1.0`. The v1.1.0 candidate has not been tagged: only tags through `v1.0.2` exist, so do not call v1.1.0 released or published.
+- `main` and `origin/main` both point to `886cbcb2cd82a337ecbda79116870f7393436123` (`docs: document five themes and automated avatar sync`). Its parent feature commit is `9e82dbcf5feee5c5ad81a4904a03a1b0ae469ef2` (`feat: add five themes and automated avatar synchronization`). The worktree was clean before this Context Waypoint update.
+- README and MASTER now document the five themes, cyclic theme control, interface improvements, and automated avatar synchronization. See [the v1.1.0 candidate context record](sessions/2026-11-01-portfolio-v1.1.0-context-sync.md).
+- The app is a static React 19, TypeScript and Vite 8 portfolio. It has five persisted themes, RU/EN localization, a static artwork credits page, and local-first avatar assets maintained by a bounded GitHub Actions workflow.
+- No hosted GitHub Actions result, Pages publishing configuration, or current public deployment was verified. Do not infer deployment from workflow configuration.
 
 ## Active work
 
-None.
+None. Context Waypoint synchronization is complete; application code and Codebase Memory were not changed.
 
 ## Open questions
 
-- `package.json` still declares version `1.0.0` while the repository has tag `v1.0.2`. The owner has not decided whether to synchronize the package version.
-- Confirm the relevant GitHub Actions run, the Pages publishing source and the published site if release deployment status is needed.
-- The 2026-10-31 release-readiness session reported that the linked public `Context-Waypoint` repository appeared empty then. Its current state was not rechecked; treat that as an unverified historical note, not a confirmed current blocker.
+- Create the v1.1.0 tag when the owner decides to make this candidate a release.
+- Verify the relevant hosted Actions run, Pages publishing source, and deployed site separately if their status is needed.
 
 ## Next action
 
-The Context Waypoint update is complete. A separate Codebase Memory stage is ready if requested; this task did not update its graph.
+Codebase Memory is the separate next stage in Documentation → Context Waypoint → Codebase Memory; do not update it without an explicit request.
 
 ## Relevant decisions
 
-See [durable project constraints](CONSTRAINTS.md) and the release-specific record linked above.
+See [durable project constraints](CONSTRAINTS.md) and the [v1.1.0 candidate context record](sessions/2026-11-01-portfolio-v1.1.0-context-sync.md).
 
 ## Active handoff
 
