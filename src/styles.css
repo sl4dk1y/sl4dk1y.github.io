@@ -6,7 +6,7 @@
   --surface-raised: #f4edef;
   --text: #271d22;
   --muted: #6d6067;
-  --subtle: #82747b;
+  --subtle: #786970;
   --accent: #852b49;
   --accent-strong: #70223d;
   --accent-soft: rgb(133 43 73 / 7%);
@@ -39,6 +39,7 @@ button, a { color: inherit; font: inherit; }
 a { text-decoration: none; }
 button { border: 0; }
 ::selection { background: var(--accent); color: #fff; }
+:root[data-theme='dark'] ::selection { background: #bd496d; color: #fff; }
 
 .page-shell { position: relative; z-index: 1; width: min(100% - clamp(40px, 8vw, 128px), 1240px); margin-inline: auto; }
 .skip-link { position: fixed; z-index: 100; top: 8px; left: 8px; padding: 10px 14px; transform: translateY(-150%); border-radius: 6px; background: var(--text); color: var(--bg); }

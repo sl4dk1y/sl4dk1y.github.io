@@ -79,6 +79,8 @@ function App() {
   const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
     const [heroArtwork, setHeroArtwork] = useState(selectedHeroArtwork)
   const [menuOpen, setMenuOpen] = useState(false)
+  const primaryNavRef = useRef<HTMLElement>(null)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
   const [emailCopyStatus, setEmailCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
   const emailCopyTimer = useRef<number | null>(null)
   const t = translations[locale]
@@ -131,12 +133,21 @@ function App() {
     }, [])
 
   useEffect(() => {
+    if (!menuOpen) return
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMenuOpen(false)
+      if (event.key !== 'Escape') return
+      setMenuOpen(false)
+      menuToggleRef.current?.focus()
     }
     window.addEventListener('keydown', closeOnEscape)
     return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [])
+  }, [menuOpen])
+
+  useEffect(() => {
+    if (menuOpen && window.matchMedia('(max-width: 800px)').matches) {
+      primaryNavRef.current?.querySelector<HTMLAnchorElement>('a')?.focus()
+    }
+  }, [menuOpen])
 
   const changeTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark'
@@ -181,9 +192,14 @@ function App() {
             <span>{profile.handle}</span>
           </a>
 
-          <nav id="primary-nav" className={`primary-nav${menuOpen ? ' is-open' : ''}`} aria-label={t.a11y.navigation}>
+          <nav ref={primaryNavRef} id="primary-nav" className={`primary-nav${menuOpen ? ' is-open' : ''}`} aria-label={t.a11y.navigation}>
             {navigation.map((item) => (
-              <a key={item.id} href={`#${item.id}`} onClick={() => setMenuOpen(false)}>
+              <a key={item.id} href={`#${item.id}`} onClick={() => {
+                setMenuOpen(false)
+                if (window.matchMedia('(max-width: 800px)').matches) {
+                  window.requestAnimationFrame(() => menuToggleRef.current?.focus())
+                }
+              }}>
                 {item.label}
               </a>
             ))}
@@ -200,7 +216,7 @@ function App() {
             <button className="icon-button theme-toggle" type="button" onClick={changeTheme} aria-label={theme === 'dark' ? t.theme.light : t.theme.dark} aria-pressed={theme === 'light'} title={theme === 'dark' ? t.theme.light : t.theme.dark}>
               {theme === 'dark' ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
             </button>
-            <button className="icon-button menu-toggle" type="button" aria-label={menuOpen ? t.nav.close : t.nav.menu} aria-expanded={menuOpen} aria-controls="primary-nav" onClick={() => setMenuOpen(!menuOpen)}>
+            <button ref={menuToggleRef} className="icon-button menu-toggle" type="button" aria-label={menuOpen ? t.nav.close : t.nav.menu} aria-expanded={menuOpen} aria-controls="primary-nav" onClick={() => setMenuOpen(!menuOpen)}>
               {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
             </button>
           </div>
