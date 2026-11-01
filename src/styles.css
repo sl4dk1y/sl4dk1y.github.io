@@ -235,6 +235,14 @@ button { border: 0; }
   .site-footer > span { margin-left: auto; }
 }
 
+@media (max-width: 520px) and (orientation: portrait) {
+  .hero__artwork { width: min(78%, 310px); height: auto; justify-self: center; }
+  .hero__artwork-frame { flex: 0 0 auto; aspect-ratio: .73; }
+  .hero__artwork figcaption { height: 64px; flex: 0 0 64px; align-items: flex-start; overflow: visible; }
+  .hero__artwork figcaption a { align-items: flex-start; }
+  .hero__artwork figcaption span { overflow: visible; overflow-wrap: anywhere; text-overflow: clip; white-space: normal; }
+}
+
 @media (max-width: 1679px) {
   .ambient-gallery { display: none; }
 }
