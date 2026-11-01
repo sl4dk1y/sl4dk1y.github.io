@@ -1,14 +1,31 @@
-import { useEffect, useRef, useState } from 'react'
-import { ArrowDownRight, ArrowUpRight, Check, Copy, Menu, Moon, Sun, X } from 'lucide-react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ArrowDownRight, ArrowUpRight, Check, CloudRain, Copy, Menu, Moon, Sun, Sunset, TreePine, X, type LucideIcon } from 'lucide-react'
 import { AmbientGallery } from './components/AmbientGallery'
 import { fallbackHeroArtwork, heroArtworks } from './content/artworks'
 import { additionalTraining, education, experiences, languages, profile, projects, seo, technologyCategories } from './content/portfolio'
 import { translations } from './content/translations'
-import type { Locale, Theme } from './content/types'
+import { themeCycle, type Locale, type Theme } from './content/types'
 import './fonts.css'
 
 const avatarUrl = profile.avatar
 const avatarSources = [profile.githubAvatar, avatarUrl]
+const themeIcons: Record<Theme, LucideIcon> = {
+  day: Sun,
+  sunset: Sunset,
+  forest: TreePine,
+  rain: CloudRain,
+  night: Moon,
+}
+
+function readTheme(): Theme {
+  const storedTheme = document.documentElement.dataset.theme
+  return themeCycle.find((option) => option === storedTheme) ?? 'day'
+}
+
+function getNextTheme(theme: Theme): Theme {
+  const currentIndex = themeCycle.indexOf(theme)
+  return themeCycle[(currentIndex + 1) % themeCycle.length]
+}
 
 function readLocale(): Locale {
   try {
@@ -76,14 +93,30 @@ function SectionTitle({ id, label, title }: { id: string; label: string; title: 
 
 function App() {
   const [locale, setLocale] = useState<Locale>(readLocale)
-  const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
+  const [theme, setTheme] = useState<Theme>(readTheme)
     const [heroArtwork, setHeroArtwork] = useState(selectedHeroArtwork)
   const [menuOpen, setMenuOpen] = useState(false)
   const primaryNavRef = useRef<HTMLElement>(null)
   const menuToggleRef = useRef<HTMLButtonElement>(null)
+  const persistThemeRef = useRef(false)
   const [emailCopyStatus, setEmailCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
   const emailCopyTimer = useRef<number | null>(null)
   const t = translations[locale]
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme
+    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    const backgroundColor = window.getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()
+    if (themeColor && backgroundColor) themeColor.content = backgroundColor
+    if (!persistThemeRef.current) return
+
+    try {
+      window.localStorage.setItem('portfolio-theme', theme)
+    } catch {
+      // The selected theme still applies when storage is unavailable.
+    }
+    persistThemeRef.current = false
+  }, [theme])
 
   const copyEmail = async () => {
     if (emailCopyTimer.current !== null) window.clearTimeout(emailCopyTimer.current)
@@ -150,17 +183,17 @@ function App() {
   }, [menuOpen])
 
   const changeTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark'
-    document.documentElement.dataset.theme = nextTheme
-    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
-    if (themeColor) themeColor.content = nextTheme === 'dark' ? '#100D10' : '#FAF7F8'
-    try {
-      localStorage.setItem('portfolio-theme', nextTheme)
-    } catch {
-      // The page still changes theme when storage is unavailable.
-    }
-    setTheme(nextTheme)
+    persistThemeRef.current = true
+    setTheme(getNextTheme(theme))
   }
+
+  const nextTheme = getNextTheme(theme)
+  const themePosition = themeCycle.indexOf(theme) + 1
+  const themeDescription = t.theme.cycleDescription
+    .replace('{current}', t.theme[theme])
+    .replace('{position}', String(themePosition))
+    .replace('{next}', t.theme[nextTheme])
+  const ThemeIcon = themeIcons[theme]
 
   const changeLocale = () => {
     const nextLocale: Locale = locale === 'en' ? 'ru' : 'en'
@@ -213,8 +246,12 @@ function App() {
               <button className="locale-toggle" type="button" onClick={changeLocale} aria-label={`${t.a11y.switchLanguage} ${t.language}`}>
               <span className={locale === 'en' ? 'is-current' : ''}>EN</span><span aria-hidden="true">/</span><span className={locale === 'ru' ? 'is-current' : ''}>RU</span>
             </button>
-            <button className="icon-button theme-toggle" type="button" onClick={changeTheme} aria-label={theme === 'dark' ? t.theme.light : t.theme.dark} aria-pressed={theme === 'light'} title={theme === 'dark' ? t.theme.light : t.theme.dark}>
-              {theme === 'dark' ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
+            <button className="icon-button theme-toggle" type="button" onClick={changeTheme} aria-label={themeDescription}>
+              <ThemeIcon size={17} aria-hidden="true" />
+              <span className="theme-toggle__indicators" aria-hidden="true">
+                {themeCycle.map((option) => <span key={option} className={option === theme ? 'is-active' : undefined} />)}
+              </span>
+              <span className="theme-toggle__tooltip" aria-hidden="true">{themeDescription}</span>
             </button>
             <button ref={menuToggleRef} className="icon-button menu-toggle" type="button" aria-label={menuOpen ? t.nav.close : t.nav.menu} aria-expanded={menuOpen} aria-controls="primary-nav" onClick={() => setMenuOpen(!menuOpen)}>
               {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}

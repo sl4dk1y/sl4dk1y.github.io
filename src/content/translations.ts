@@ -69,8 +69,12 @@ export const translations = {
       emailCopyFailed: 'Could not copy the address. Select it to copy manually.',
     },
     theme: {
-      light: 'Switch to light theme',
-      dark: 'Switch to dark theme',
+      cycleDescription: '{current} theme ({position} of 5). Switch to {next}.',
+      day: 'Day',
+      night: 'Night',
+      sunset: 'Sunset',
+      forest: 'Forest',
+      rain: 'Rain',
     },
     footer: {
       note: 'Personal portfolio',
@@ -146,8 +150,12 @@ export const translations = {
       emailCopyFailed: 'Не удалось скопировать адрес. Выделите его и скопируйте вручную.',
     },
     theme: {
-      light: 'Включить светлую тему',
-      dark: 'Включить тёмную тему',
+      cycleDescription: 'Тема: {current} ({position} из 5). Нажмите, чтобы включить {next}.',
+      day: 'День',
+      night: 'Ночь',
+      sunset: 'Закат',
+      forest: 'Лес',
+      rain: 'Дождь',
     },
     footer: {
       note: 'Личное портфолио',

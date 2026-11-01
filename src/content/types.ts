@@ -1,5 +1,6 @@
 export type Locale = 'en' | 'ru'
-export type Theme = 'dark' | 'light'
+export const themeCycle = ['day', 'sunset', 'forest', 'rain', 'night'] as const
+export type Theme = (typeof themeCycle)[number]
 
 export type TechnologyCategory = {
   id: string

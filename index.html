@@ -1,16 +1,30 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="day">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FAF7F8" />
     <script>
-      let theme = 'light'
+      const themeBackgrounds = {
+        day: '#FAF7F8',
+        night: '#100D10',
+        sunset: '#FBF5F1',
+        forest: '#F4F7F2',
+        rain: '#F3F6F8',
+      }
+      let storedTheme = null
       try {
-        theme = localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light'
+        storedTheme = localStorage.getItem('portfolio-theme')
       } catch {}
+      const migratedTheme = storedTheme === 'light' ? 'day' : storedTheme === 'dark' ? 'night' : storedTheme
+      const theme = Object.prototype.hasOwnProperty.call(themeBackgrounds, migratedTheme) ? migratedTheme : 'day'
       document.documentElement.dataset.theme = theme
-      document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#FAF7F8' : '#100D10'
+      if (storedTheme !== null && storedTheme !== theme) {
+        try {
+          localStorage.setItem('portfolio-theme', theme)
+        } catch {}
+      }
+      document.querySelector('meta[name="theme-color"]').content = themeBackgrounds[theme]
     </script>
     <meta name="description" content="Portfolio of sl4dk1y, a Computer Science and Computer Engineering student with an applied AI specialization. Interests include backend development and AI engineering." />
     <meta property="og:type" content="website" />
