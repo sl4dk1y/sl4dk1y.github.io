@@ -49,7 +49,7 @@ The container is named `sl4dk1y-portfolio-preview`. `docker compose down` stops 
 - `src/App.tsx` holds the page sections and theme, language and navigation controls.
 - `src/styles.css` holds the layout, responsive rules, color themes and reduced-motion-aware reveal effects.
 - `src/fonts.css` loads the selected local font subsets.
-- `public/images/` holds the local GitHub avatar and the Hero fallback artwork. Optimized artwork is stored under `public/artwork/`.
+- `public/images/` holds the local WebP avatar fallback and the Hero fallback artwork. The React page first tries the public GitHub avatar URL, then falls back to the local image. Optimized artwork is stored under `public/artwork/`.
 - `index.html` includes an English static fallback for visitors who disable JavaScript; `public/noscript.css` styles that version.
 
 The page sections appear in this order: Hero, About, Projects, Technical Skills, Experience, Education, Additional Training, Languages and Contact. About copy is maintained in English and Russian in `src/content/translations.ts`; the English no-JavaScript fallback in `index.html` follows the English copy. Update public copy in the typed content modules and keep both languages in step. Add or remove a project in the `projects` array in `portfolio.ts`. Each item has a name, bilingual description, tags and public repository links. Keep the content limited to work that is public and approved to show.
@@ -58,18 +58,20 @@ The Contact section places the GitHub profile and email next to its heading. An 
 
 Light mode is the default on a first visit. A chosen light or dark theme is saved in local storage. Language selection does not change the saved theme. The local avatar and favicon images were downloaded from `https://github.com/sl4dk1y.png`; replace `public/images/github-avatar.webp`, `public/favicon.png` and `public/apple-touch-icon.png` together if the GitHub avatar changes. The page shows a short initials fallback if the local avatar cannot load.
 
-The Hero randomly selects one of 44 local floral works on page load. It avoids the previous choice on a reload in the same tab and keeps the selection through language and theme changes. The Ambient Gallery uses 70 locally stored works, with its file membership matching `public/artwork/ambient/`. The collections include botanical prints, landscapes, portraits and animals from documented open-access sources. Sources, image paths and rights notes are listed in `src/content/artworks.ts` and on the [artwork credits page](public/artwork/credits.html). Images are local WebP files, so the site does not request them from an external archive at runtime.
-
-The ambient collection has 65 local non-floral historical works, including landscapes, architecture, portraits and animals. It includes 15 additions from The Met and the Art Institute of Chicago, both marked open access in their collection records. At widths from 1680px, the page samples fourteen unique images and arranges them in two independently selected side compositions. The collage remains static and is omitted for reduced motion and narrower screens. Ambient images are decorative and use empty alt text. The public-domain status and source records for each image are listed on the [artwork credits page](public/artwork/credits.html).
+The Hero selects one of 44 local floral works on page load. It avoids the previous choice on a reload in the same tab and keeps the selection through language and theme changes. If the selected image fails to load, the page uses the local Hero fallback. The Ambient Gallery catalog has 70 local works, with its file membership matching `public/artwork/ambient/`. At viewport widths of at least 1680px, the page selects fourteen unique works and places seven in each of two independently chosen side compositions. The gallery is static, omitted for reduced motion and narrower screens, and its decorative images use empty alt text. Artwork records, image paths, source details and rights notes are listed in `src/content/artworks.ts` and on the [artwork credits page](public/artwork/credits.html). The site serves artwork from local WebP files rather than requesting them from an external archive at runtime.
 
 The Open Graph card is a local 1200 by 630 PNG. Its editable vector source is `public/og-card.svg`.
 
 ## Architecture
 
-`src/main.tsx` mounts the React app. `App.tsx` renders the single-page portfolio and its interactions. Typed content and translations live under `src/content/`. The static build works on GitHub Pages at the root of `https://sl4dk1y.github.io`.
+`src/main.tsx` mounts the React app. `src/App.tsx` renders the page sections and interactions; `src/content/` holds typed profile, project, translation and artwork data; `src/styles.css` defines layout, responsive rules, themes and reveal effects. `index.html` contains the English no-JavaScript page and initializes the saved theme before React renders. Vite builds the static site for the root URL `https://sl4dk1y.github.io/`.
+
+## Release v1.0.2
+
+The `v1.0.2` tag points to release commit `ef1c73b382ca5cdb935c9ca899483e7f7d86c9f7`. The release changes refine Hero artwork sizing so images keep their source proportions without cropping, center and enlarge the artwork on mobile portrait screens, and reserve a separate area for its caption. The Hero figure keeps a layout-defined height across source image orientations. The Ambient Gallery now positions artwork using the viewport and sticky header dimensions, and updates that placement after a resize. Contact layout behavior is described below; its responsive layout and localized email-copy interaction were already present before the `v1.0.2` tag.
+
+The Pages workflow runs `npm run typecheck`, `npm run lint` and `npm run build` before uploading the `dist/` artifact. These three commands passed in the local documentation verification after this release. The repository does not contain a record of the specific GitHub Actions run for the release.
 
 ## GitHub Pages
 
-The workflow in `.github/workflows/pages.yml` configures Pages, runs typecheck, lint and production build, then uploads `dist/` for GitHub Pages Actions deployment. In **Settings > Pages > Build and deployment**, set the publishing source to **GitHub Actions**. The current public site is configured for legacy branch-root publishing, which serves the source `index.html` with `/src/main.tsx` instead of Vite's compiled files in `dist/`; browsers cannot run that TypeScript entry directly. Switching the publishing source is a repository-owner action. After the setting is changed and the workflow runs again, verify that the public HTML loads compiled `/assets/` files and the page mounts correctly.
-
-Git operations and publishing are performed manually by the repository owner.
+The workflow in `.github/workflows/pages.yml` runs on pushes to `main` and on `workflow_dispatch`. It configures Pages, runs typecheck, lint and production build, then uploads `dist/` and deploys the Pages artifact. The repository's Pages publishing source must be set to **GitHub Actions** for this workflow to publish. That setting and the current public deployment state cannot be verified from tracked files. A push to `main` can start deployment automatically; the repository owner performs Git operations and controls release actions.
