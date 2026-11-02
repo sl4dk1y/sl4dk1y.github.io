@@ -5,31 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FAF7F8" />
     <script>
-      const themeBackgrounds = {
-        day: '#FAF7F8',
-        night: '#100D10',
-        sunset: '#FBF5F1',
-        forest: '#F4F7F2',
-        rain: '#F3F6F8',
-      }
+      const themeBackgrounds = { day: '#FAF7F8', night: '#100D10', sunset: '#FBF5F1', forest: '#F4F7F2', rain: '#F3F6F8' }
       let storedTheme = null
-      try {
-        storedTheme = localStorage.getItem('portfolio-theme')
-      } catch {}
+      try { storedTheme = localStorage.getItem('portfolio-theme') } catch {}
       const migratedTheme = storedTheme === 'light' ? 'day' : storedTheme === 'dark' ? 'night' : storedTheme
       const theme = Object.prototype.hasOwnProperty.call(themeBackgrounds, migratedTheme) ? migratedTheme : 'day'
       document.documentElement.dataset.theme = theme
-      if (storedTheme !== null && storedTheme !== theme) {
-        try {
-          localStorage.setItem('portfolio-theme', theme)
-        } catch {}
-      }
+      if (storedTheme !== null && storedTheme !== theme) { try { localStorage.setItem('portfolio-theme', theme) } catch {} }
       document.querySelector('meta[name="theme-color"]').content = themeBackgrounds[theme]
     </script>
-    <meta name="description" content="Portfolio of sl4dk1y, a Computer Science and Computer Engineering student with an applied AI specialization. Interests include backend development and AI engineering." />
+    <meta name="description" content="AI Engineering projects, retrieval research and backend development by sl4dk1y." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="sl4dk1y | Portfolio" />
-    <meta property="og:description" content="Portfolio of sl4dk1y, a Computer Science and Computer Engineering student with an applied AI specialization. Interests include backend development and AI engineering." />
+    <meta property="og:description" content="AI Engineering projects, retrieval research and backend development by sl4dk1y." />
     <meta property="og:url" content="https://sl4dk1y.github.io/" />
     <meta property="og:image" content="https://sl4dk1y.github.io/og-card.png" />
     <meta property="og:image:type" content="image/png" />
@@ -38,7 +26,7 @@
     <meta property="og:image:alt" content="sl4dk1y, AI Engineering and Backend Development" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="sl4dk1y | Portfolio" />
-    <meta name="twitter:description" content="Portfolio of sl4dk1y, a Computer Science and Computer Engineering student with an applied AI specialization. Interests include backend development and AI engineering." />
+    <meta name="twitter:description" content="AI Engineering projects, retrieval research and backend development by sl4dk1y." />
     <meta name="twitter:image" content="https://sl4dk1y.github.io/og-card.png" />
     <link rel="canonical" href="https://sl4dk1y.github.io/" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -49,55 +37,31 @@
   <body>
     <noscript>
       <main class="no-script-portfolio" id="main">
-        <header class="no-script-header no-script-shell">
-          <a class="no-script-brand" href="#top"><img src="/images/github-avatar-14b5d978365f044516cedb3805f2aec6db3d8c5e5cae042007994d69e18cf022.webp" width="32" height="32" alt="" />sl4dk1y</a>
-          <nav aria-label="Main navigation"><a href="#about">About</a><a href="#projects">Projects</a><a href="#stack">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#contact">Contact</a></nav>
-        </header>
+        <header class="no-script-header no-script-shell"><a class="no-script-brand" href="#top"><img src="/images/github-avatar-14b5d978365f044516cedb3805f2aec6db3d8c5e5cae042007994d69e18cf022.webp" width="32" height="32" alt="" />sl4dk1y</a><nav aria-label="Main navigation"><a href="#work">Work</a><a href="#practice">Practice</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Contact</a></nav></header>
         <section class="no-script-hero no-script-shell" id="top">
-          <div>
-            <div class="no-script-identity"><img src="/images/github-avatar-14b5d978365f044516cedb3805f2aec6db3d8c5e5cae042007994d69e18cf022.webp" width="88" height="88" alt="" /><div><strong>sl4dk1y</strong><p>Computer Science and Computer Engineering student</p></div></div>
-            <h1>AI Engineering &amp; Backend Development</h1>
-            <p>I build backend services and practical tools for language models. I’m especially interested in information retrieval and how AI applications are built.</p>
-            <p class="no-script-links"><a href="#projects">Explore projects ↓</a><a href="https://github.com/sl4dk1y" rel="noreferrer">GitHub profile ↗</a></p>
+          <div><p class="no-script-hero-eyebrow">Engineering / intelligence / systems</p><h1><span>AI Engineering.</span><span>Backend Development.</span></h1><p class="no-script-hero-intro">From concept and architecture to working systems.</p>
+            <svg class="no-script-signal" viewBox="0 0 320 56" aria-hidden="true" focusable="false"><path class="no-script-signal-harmonic" d="M2 32c18 0 20-8 36-8s21 14 38 14 22-10 38-10h12c12 0 15-12 29-12s18 26 33 26 18-14 34-14h15c11 0 15-9 28-9s17 17 30 17 18-8 33-8h50" /><path class="no-script-signal-track" pathLength="100" d="M2 28h23c8 0 10-10 18-10s10 20 19 20 10-17 19-17 10 11 19 11h15c8 0 11-18 20-18s11 30 21 30 11-19 21-19h20c8 0 11-11 19-11s11 22 20 22 11-13 20-13h62" /><path class="no-script-signal-pulse" pathLength="100" d="M2 28h23c8 0 10-10 18-10s10 20 19 20 10-17 19-17 10 11 19 11h15c8 0 11-18 20-18s11 30 21 30 11-19 21-19h20c8 0 11-11 19-11s11 22 20 22 11-13 20-13h62" /><path class="no-script-signal-pulse no-script-signal-pulse--echo" pathLength="100" d="M2 28h23c8 0 10-10 18-10s10 20 19 20 10-17 19-17 10 11 19 11h15c8 0 11-18 20-18s11 30 21 30 11-19 21-19h20c8 0 11-11 19-11s11 22 20 22 11-13 20-13h62" /></svg>
+            <p class="no-script-links"><a href="#work">Selected work ↓</a><a href="https://github.com/sl4dk1y" rel="noreferrer">GitHub profile ↗</a></p>
           </div>
           <figure><div class="no-script-artwork-frame"><span class="no-script-artwork-image-clip"><img src="/images/red-frangipanni.webp" width="912" height="1200" alt="Hand-colored botanical plate of pink frangipanni blossoms and broad leaves." /></span></div><figcaption><a href="https://www.nga.gov/artworks/73658-red-frangipanni-plumeria-rubra" rel="noreferrer">Mark Catesby, 1731 to 1743 · NGA Open Access · public domain ↗</a></figcaption></figure>
         </section>
-        <section class="no-script-section no-script-about no-script-shell" id="about">
-          <h2>About me</h2><div><p>I study artificial intelligence and build backend services and automation tools. My interests include machine learning, working with data, and engineering applications powered by language models.</p></div>
+        <section class="no-script-section no-script-shell" id="work">
+          <h2>Selected work</h2>
+          <p>Public projects and research, with their purpose, technical choices and supporting evidence.</p>
+          <article><small>Research · completed retrieval evaluation</small><h3>RAG Retrieval Research</h3><p>A Russian-language retrieval study with separate full-corpus and reduced-collection experiments. The case includes measured TEST results and a DEV ablation.</p><a href="/projects/rag-retrieval-research/">Read the case</a> · <a href="https://github.com/sl4dk1y/rag-retrieval-research" rel="noreferrer noopener">Repository</a></article>
+          <article><small>Experimental CLI · alpha</small><h3>SnapKeep</h3><p>A Python command-line tool for timestamped project snapshots and archive verification. It has not had an independent operational trial.</p><a href="/projects/snapkeep/">Read the case</a> · <a href="https://github.com/sl4dk1y/SnapKeep" rel="noreferrer noopener">Repository</a></article>
+          <article><small>AI engineering · learning experiment</small><h3>AI Text Helper</h3><p>A Russian text API prototype with improve and summarize tasks, a BM25 correction lookup and local-model integration. Fine-tuning results are not claimed.</p><a href="/projects/ai-text-helper/">Read the case</a> · <a href="https://github.com/sl4dk1y/AI-Text-Helper" rel="noreferrer noopener">Repository</a></article>
+          <h3>Developer tools and agent workflows</h3>
+          <p>Two public tools and a local skill for carrying project context between agent sessions.</p>
+          <article><small>Agent workflow · instruction set</small><h4>Agent Safe Flow</h4><p>Five reusable instructions for specification, audit, implementation, review and release checks. This is not a software runtime.</p><a href="/projects/agent-safe-flow/">Read the case</a> · <a href="https://github.com/sl4dk1y/Agent-Safe-Flow" rel="noreferrer noopener">Repository</a></article>
+          <article><small>Developer tooling · v0.1.0</small><h4>Codebase Atlas</h4><p>A portable skill for source-backed codebase walkthroughs and Mermaid diagrams. It does not include a diagram renderer.</p><a href="/projects/codebase-atlas/">Read the case</a> · <a href="https://github.com/sl4dk1y/Codebase-Atlas" rel="noreferrer noopener">Repository</a></article>
+          <article><small>Agent continuity · local skill, source not published</small><h4>Context Waypoint</h4><p>A Markdown convention and agent skill that help carry concise project state and handoffs between work sessions.</p><a href="/projects/context-waypoint/">Read the case</a> · <a href="https://github.com/sl4dk1y/Context-Waypoint" rel="noreferrer noopener">GitHub repository</a><p>The public repository is empty; the local source and instructions are not published there.</p></article>
         </section>
-        <section class="no-script-section no-script-shell" id="projects">
-          <div class="no-script-section-heading"><h2>Projects</h2><p>Public projects and skills for coding agents.</p></div>
-          <div class="no-script-projects">
-            <article><small>Python · ZIP</small><h3>SnapKeep</h3><p>A cross-platform command-line tool for creating timestamped ZIP snapshots of project folders, with configurable ignore rules.</p><a href="https://github.com/sl4dk1y/SnapKeep" rel="noreferrer">Repository ↗</a></article>
-            <article><small>Python · FAISS · PyTorch · BM25</small><h3>RAG Retrieval Research</h3><p>Compares BM25, dense and hybrid retrieval for Russian-language RAG, with experiment protocols, evaluation results and error analysis.</p><a href="https://github.com/sl4dk1y/rag-retrieval-research" rel="noreferrer">Repository ↗</a></article>
-            <article><small>AI agent skills · Markdown</small><h3>Agent Skills</h3><p>Three reusable skills for coding agents: a guided development workflow, codebase explanations with source references, and context carried between sessions.</p><p><a href="https://github.com/sl4dk1y/Agent-Safe-Flow" rel="noreferrer">Agent Safe Flow ↗</a> · <a href="https://github.com/sl4dk1y/Codebase-Atlas" rel="noreferrer">Codebase Atlas ↗</a> · <a href="https://github.com/sl4dk1y/Context-Waypoint" rel="noreferrer">Context Waypoint ↗</a></p></article>
-          </div>
-        </section>
-        <section class="no-script-section no-script-shell" id="stack">
-          <div class="no-script-section-heading"><h2>Technical skills</h2><p>Languages, methods and tools used across my work and studies.</p></div>
-          <div class="no-script-stack">
-            <section><h3>Languages</h3><p>Assembly · C · C++ · Python · Java · Kotlin · R · JavaScript · TypeScript · SQL</p></section>
-            <section><h3>Web</h3><p>HTML · CSS</p></section>
-            <section><h3>Backend &amp; Testing</h3><p>FastAPI · REST API · GraphQL · JSON · WebSocket · aiogram · aiohttp · SQLAlchemy · Alembic · pytest · Locust</p></section>
-            <section><h3>AI Engineering</h3><p>RAG · SGR (Self-Generated Reasoning) · Prompt engineering · Structured outputs · BM25 · LLM evaluation · Fine-tuning concepts · PEFT concepts · Quantization concepts · Machine learning fundamentals · Model evaluation</p></section>
-            <section><h3>AI / ML tools</h3><p>Langfuse · LiteLLM · Ollama · PyTorch · FAISS · bm25s</p></section>
-            <section><h3>Databases</h3><p>PostgreSQL · SQLite · MySQL · MongoDB</p></section>
-            <section><h3>Infrastructure &amp; Tools</h3><p>Linux · Docker · Docker Compose · Git · GitHub · GitHub Actions · Nginx · systemd · Prometheus · Grafana · VPS deployment</p></section>
-          </div>
-        </section>
-        <section class="no-script-section no-script-shell" id="experience">
-          <div class="no-script-section-heading"><h2>Experience</h2><p>Independent development, teaching and other work.</p></div>
-          <div class="no-script-experience">
-            <article><div><h3>AI Engineering &amp; Python Development</h3><p>Independent Projects · Self-directed work · Remote</p></div><div><p>I build Python services and tools for APIs, data processing and language model applications.</p><ul><li>Develop AI applications and backend services with Python and FastAPI.</li><li>Build LLM features with RAG, structured outputs and model integrations.</li><li>Design REST APIs and external service integrations; work with PostgreSQL and database migrations.</li><li>Package applications with Docker Compose and deploy them to Linux VPS environments.</li><li>Use Langfuse, Prometheus, Grafana and Locust for observability and testing.</li><li>Maintain projects with Git and GitHub, and write technical documentation.</li></ul></div></article>
-            <article><div><h3>AI Engineering Intern / Trainee</h3><p>Neoflex · June to July 2026 · Internship / trainee</p></div><div><p>Worked on the architecture and evaluation of the AI Text Helper LLM application.</p><ul><li>Analyzed requirements and approaches to LLM integration, prompting and structured model outputs.</li><li>Worked with RAG and BM25 retrieval and evaluated retrieval and agent approaches.</li><li>Investigated fine-tuning strategies, PEFT, quantization, threat modeling and production readiness.</li><li>Used LLM infrastructure and observability tools, including LiteLLM and Langfuse.</li></ul><a href="https://github.com/sl4dk1y/AI-Text-Helper" target="_blank" rel="noreferrer noopener">AI Text Helper ↗</a></div></article>
-            <article><div><h3>Programming Teacher</h3><p>Softium · February 2025 – September 2026 · Full-time, on-site</p></div><div><p>Taught programming, computer science fundamentals and digital tools to school students.</p><ul><li>Explained technical topics in a clear, structured way and helped students develop problem-solving skills.</li><li>Taught programming languages, web technologies and professional software tools.</li><li>Prepared individual study plans and supported academic and extracurricular projects.</li></ul></div></article>
-            <article><div><h3>Copywriter</h3><p>Self-employed · January 2019 to present · Part-time, remote</p></div><div><p>Write and edit informational and commercial content for websites.</p><ul><li>Research topics using multiple sources and prepare website content.</li><li>Review copy for accuracy, readability and consistency, and manage deadlines independently.</li></ul></div></article>
-          </div>
-        </section>
-        <section class="no-script-section no-script-shell" id="education"><div class="no-script-section-heading"><h2>Education</h2></div><article class="no-script-credential"><div><h3>Bachelor's Degree in Computer Science and Computer Engineering</h3><p>Applied Artificial Intelligence specialization</p><p>Penza State University</p></div><p>2023–2027<br /><small>Currently studying</small></p></article></section>
-        <section class="no-script-section no-script-shell" id="training"><div class="no-script-section-heading"><h2>Additional training</h2></div><article class="no-script-credential"><div><h3>AI Engineering course</h3><p>Neoflex</p></div><p>February to June 2026<br /><small>AI Engineering training at Neoflex.</small></p></article></section>
-        <section class="no-script-section no-script-shell" id="languages"><div class="no-script-section-heading"><h2>Languages</h2></div><ul class="no-script-languages"><li><strong>Russian</strong><span>Native</span></li><li><strong>English</strong><span>Intermediate / Upper-Intermediate</span></li></ul></section>
-        <section class="no-script-contact no-script-shell" id="contact"><div><small>GET IN TOUCH</small><h2>Contact</h2><p>Open to job opportunities, interesting projects, and professional collaboration.</p></div><div class="no-script-contact-links"><a href="https://github.com/sl4dk1y" rel="noreferrer">github.com/sl4dk1y ↗</a><a href="mailto:sweetbusiness@duck.com">sweetbusiness@duck.com</a></div></section>
+        <section class="no-script-section no-script-shell" id="practice"><h2>Engineering practice</h2><p>Examples from public projects include backend reliability, retrieval evaluation and developer tools.</p><article><h3>Backend systems and reliability</h3><p>Keep API boundaries clear, validate inputs, handle failures deliberately, and consider safe data changes, testing, and observability.</p></article><article><h3>Retrieval evaluation</h3><p>The RAG Retrieval Research repository contains saved search runs and Recall@K and nDCG metrics. DEV ablations are separate from TEST results.</p></article><article><h3>Developer tools and agent workflows</h3><p>The public tools cover careful file handling, source-based code explanations and staged checks.</p></article></section>
+        <section class="no-script-section no-script-shell" id="process"><h2>How I work</h2><ol><li>Frame the problem and constraints.</li><li>Design boundaries and failure behavior.</li><li>Implement a coherent change.</li><li>Validate expected and failure paths.</li><li>Consider operations and maintenance.</li></ol></section>
+        <section class="no-script-section no-script-shell" id="notes"><h2>Research notes</h2><p>These notes are limited to the RAG experiments and collections described in the case. They may not apply to other datasets.</p><article><h3>The tested hybrids showed no nominally significant gain</h3><p>Paired tests found no nominally significant improvement over the dense baselines for the tested fixed-weight hybrid methods.</p></article><article><h3>Results from the reduced collection apply only to that collection</h3><p>Positive TEST qrels and historical retrieval results informed the collection, so the test results are not independent of its construction.</p></article><a href="/projects/rag-retrieval-research/">Read the research case</a></section>
+        <section class="no-script-section no-script-about no-script-shell" id="about"><h2>About</h2><div><p>I value work that can be checked: clear interfaces, explicit limits, and conclusions supported by tests or measurements.</p><p>The projects above include a text API prototype, retrieval research, an early CLI tool and developer tools.</p></div></section>
+        <section class="no-script-contact no-script-shell" id="contact"><div><small>GET IN TOUCH</small><h2>Contact</h2><p>For project or work inquiries, contact me here.</p></div><div class="no-script-contact-links"><a href="https://github.com/sl4dk1y" rel="noreferrer">github.com/sl4dk1y ↗</a><a href="mailto:sweetbusiness@duck.com">sweetbusiness@duck.com</a></div></section>
         <footer class="no-script-footer no-script-shell"><strong>sl4dk1y</strong><span>Personal portfolio</span><a href="/artwork/credits.html">Artwork credits</a><span>© 2026</span></footer>
       </main>
     </noscript>

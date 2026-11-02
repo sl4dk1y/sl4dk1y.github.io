@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="day">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FAF7F8" />
+    <script>
+      const colors = { day: '#FAF7F8', sunset: '#FBF5F1', forest: '#F4F7F2', rain: '#F3F6F8', night: '#100D10' }
+      try { const saved = localStorage.getItem('portfolio-theme'); const migrated = saved === 'light' ? 'day' : saved === 'dark' ? 'night' : saved; document.documentElement.dataset.theme = Object.prototype.hasOwnProperty.call(colors, migrated) ? migrated : 'day' } catch {}
+      document.querySelector('meta[name="theme-color"]').content = colors[document.documentElement.dataset.theme]
+    </script>
+    <meta name="description" content="A learning project: a Russian text API prototype with lexical search for corrections and local LLM integration." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Text Helper | sl4dk1y" />
+    <meta property="og:description" content="A learning project: a Russian text API prototype with lexical search for corrections and local LLM integration." />
+    <meta property="og:url" content="https://sl4dk1y.github.io/projects/ai-text-helper/" />
+    <meta property="og:image" content="https://sl4dk1y.github.io/og-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI Text Helper | sl4dk1y" />
+    <meta name="twitter:description" content="A learning project: a Russian text API prototype with lexical search for corrections and local LLM integration." />
+    <link rel="canonical" href="https://sl4dk1y.github.io/projects/ai-text-helper/" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <noscript><link rel="stylesheet" href="/noscript.css" /></noscript>
+    <title>AI Text Helper | sl4dk1y</title>
+  </head>
+  <body>
+    <noscript><main class="no-script-case"><a href="/">sl4dk1y</a><p>AI ENGINEERING · LEARNING EXPERIMENT</p><h1>AI Text Helper</h1><p>A Python API prototype for improving and summarizing Russian text with an LLM and lexical search for known corrections.</p><h2>Approach</h2><p>FastAPI routes each request to the selected task. Text improvement can first look up known corrections with BM25, then call a local model through LiteLLM and Ollama.</p><h2>Validation and limits</h2><p>The repository includes tests for the API, prompts, agent behavior and retriever. It also includes retrieval-evaluation and Locust scripts. These do not establish production reliability or measured end-to-end quality.</p><p>The repository includes a LoRA training script, but no reproducible validation report or published adapter demonstrates a quality gain. Fine-tuning remains an experiment; this is not a production-ready project.</p><a href="https://github.com/sl4dk1y/AI-Text-Helper" rel="noreferrer noopener">View public repository ↗</a></main></noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

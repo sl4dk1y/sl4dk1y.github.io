@@ -8,14 +8,6 @@ export type TechnologyCategory = {
   items: string[]
 }
 
-export type PortfolioProject = {
-  id: string
-  name: string
-  description: Record<Locale, string>
-  tags: string[]
-  repositories: { label: Record<Locale, string>; href: string }[]
-}
-
 export type PortfolioExperience = {
   id: string
   role: Record<Locale, string>

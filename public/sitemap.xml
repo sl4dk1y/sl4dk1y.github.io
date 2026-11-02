@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://sl4dk1y.github.io/</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://sl4dk1y.github.io/projects/ai-text-helper/</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://sl4dk1y.github.io/projects/snapkeep/</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://sl4dk1y.github.io/projects/agent-safe-flow/</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://sl4dk1y.github.io/projects/rag-retrieval-research/</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://sl4dk1y.github.io/projects/codebase-atlas/</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://sl4dk1y.github.io/projects/context-waypoint/</loc><changefreq>monthly</changefreq></url>
 </urlset>

@@ -2,7 +2,7 @@
 
 ## Direction
 
-A compact editorial portfolio for an individual developer. Favor clear text, quiet surfaces and direct links. A changing floral work gives the Hero a natural-history accent; the wide-screen side collage uses historic landscapes, architecture, portraits and animals. Keep the remaining sections free of decorative art, diagrams, card numbering and unnecessary grids. This is a portfolio, not a product landing page.
+An editorial portfolio organized around selected work, engineering practice and research notes. Pair restrained serif headings with a practical sans-serif interface and quiet surfaces. The Hero combines a text-led introduction, a fine-grain background, an abstract signal line and a locally stored botanical illustration. The wide-screen Ambient Gallery uses historic landscapes, architecture, portraits and animals. Keep the homepage text-forward; use diagrams and data figures inside relevant case pages. The numbered five-step Process list is intentional. Avoid decorative card grids and landing-page embellishments.
 
 ## Color tokens
 
@@ -32,21 +32,21 @@ These semantic variables are declared in `src/styles.css` under `data-theme`. Us
 - Interface and body: Source Sans 3 Variable.
 - Editorial headings: Source Serif 4 Variable.
 - Both families are self-hosted WOFF2, use Latin and Cyrillic subsets, and are distributed under the SIL Open Font License 1.1.
-- Body text starts at 16px with 1.6 line height; project descriptions use 14px and skill tags use 13px. Section headings scale with `clamp()` across viewport sizes. Preserve readable line spacing when adjusting mobile typography.
-- Keep headings moderate and body copy comfortably readable. Avoid mono labels as decoration.
+- Body text is 16px with 1.6 line height. Hero headings scale from 46px to 64px on desktop; section headings scale from 27px to 34px. Case headings and work titles use the same serif display voice at smaller responsive sizes.
+- Use small uppercase sans-serif kickers for section labels. Keep body copy readable and line lengths controlled; avoid decorative monospaced labels.
 
 ## Layout and components
 
 - Main content width: up to 1240px with fluid side gutters. Keep paragraph measure around 60–75ch.
-- A compact sticky header contains an avatar and handle, section links, language control and theme control. Use the locally stored, SHA-256-versioned WebP avatar as the primary visual asset.
-- The Hero places the avatar, handle, study context, specialty heading, introduction and two links beside a locally stored floral work selected from the 44-item Hero collection on page load. Keep the selection stable during language and theme changes. The avatar uses the current local image, with a previous local image available as fallback when present.
-- Keep section order as About, Projects, Technical Skills, Experience, Education, Additional Training, Languages and Contact. Use short descriptive eyebrow labels that add context without repeating the section title.
-- About is one short paragraph about applied AI studies and current technical interests.
-- Projects use short cards with description, tags and repository links. No image placeholders.
-- Technical Skills uses two columns of compact text groups and plain tags. Mark conceptual AI knowledge without implying production experience.
-- Experience uses a compact text-first timeline; label independent projects as self-directed rather than employment. Education, training and languages use short credential rows.
-- Contact is a compact section with GitHub and email links, plus a localized email-copy action and live status feedback.
-- The static ambient collage selects fourteen unique local works from the 70-item collection at widths of at least 1680px. It places seven works on each side, uses an independently selected layout for each side and is omitted for reduced motion and narrower screens.
+- A compact sticky Header contains the local avatar and handle, anchor navigation, locale control and theme button.
+- The Hero uses a two-column composition on wide screens. Its left column has an eyebrow, two-line display heading, short introduction, abstract signal graphic and direct links. A local botanical work sits in the right column with its attribution in a separate caption area. Keep its source aspect ratio and its selection stable while the locale or theme changes.
+- The homepage order is Hero, Work, Practice, Process, Notes, About and Contact. The header links to Work, Practice, Notes, About and Contact.
+- Work uses open, border-separated editorial rows rather than a project-card grid. Three featured cases show problem and approach beside tags and links; a secondary list holds three more cases.
+- Practice is a three-column text section. Process is a five-step numbered list. Notes presents research findings in concise rows. About remains text-led.
+- Each of the six case pages uses a shared reading order: case title and status, overview/problem/approach, an architecture diagram or research figures, decisions, validation/outcome and a repository link. Keep caveats visible beside results when the evidence has limits.
+- Architecture diagrams use simple connected nodes and branches with captions, not ornamental illustrations. The RAG case uses horizontal metric bars paired with an accessible HTML data table. Keep labels and units legible in both visual and tabular forms.
+- Contact is a compact three-column row on wide screens, with GitHub and email links and a localized email-copy action with live status feedback.
+- The Ambient Gallery is a static side composition on the homepage only. It shows fourteen unique local works, seven per side, in three visual depth levels at widths of at least 1680px. Keep the center content clear and hide the gallery for reduced motion and narrower screens.
 - Keep source image proportions with `object-fit: contain`; do not crop artwork. Apply the 9px Hero and 15px Ambient Gallery corner radius to the image boundaries. Avoid added frames or shadows.
 - Footer stays quiet and short.
 
@@ -57,30 +57,35 @@ These semantic variables are declared in `src/styles.css` under `data-theme`. Us
 - Keep the five small theme indicators hidden at rest. On pointer hover or keyboard focus, show the indicators, the button border and background, and a localized tooltip. Widen the active indicator to distinguish it from the other four.
 - The theme button's localized accessible name states the current theme, its position in the five-theme cycle and the next theme. The visual tooltip is `aria-hidden`; the button's `aria-label` supplies the accessible name.
 - Theme and language controls are buttons with clear accessible names. Language changes update the tooltip and accessible name without changing the stored theme.
-- Use a one-time IntersectionObserver reveal with a small vertical offset and a short stagger. Keep hover transitions subtle and reveal all content immediately when JavaScript or motion is unavailable, or when `prefers-reduced-motion` is enabled.
-- Keep the default English content available in the static `noscript` fallback, with working section anchors and no reveal effects.
+- Pointer hover darkens text links, uses the stronger accent on Hero attribution and project links, and adds a quiet border/surface to icon and contact controls. The theme button gets a stronger border and hover surface. Active links and buttons reduce opacity; keyboard focus uses the global visible focus ring.
+- The Hero copy enters with a short fade and upward offset. Homepage sections marked for reveal use a one-time `IntersectionObserver`, a 16px upward offset and a 650ms fade/settle transition with a restrained stagger.
+- The Hero signal line has two slow pulses. Keep this motion subtle; do not add parallax or movement to the static Ambient Gallery.
+- Keep English static fallback content in the homepage and each case HTML entry, with working links and no reveal dependency. Content must remain visible if JavaScript or `IntersectionObserver` is unavailable.
 - The no-JavaScript fallback uses the static Day palette. Theme cycling and the five-theme localStorage migration require JavaScript.
-- Avoid scroll choreography, parallax, continuous animation and layout shifts.
+- Under `prefers-reduced-motion`, reveal content immediately, stop the signal pulses, reduce transitions and hide the Ambient Gallery.
 
 ## Responsive and accessible
 
-- At widths above 800px, the Hero uses two columns and the main content uses the 1240px maximum width with fluid side gutters. At 800px and below, the navigation becomes a menu, the page shell narrows to at most 720px, and the Hero keeps a two-column layout with a 190px artwork column. Project cards reduce to two columns and About stacks vertically.
-- At 520px and below, the page shell uses 18px side gutters, the Hero and Contact stack into one column, project cards and skill groups use one column, and experience and credential rows stack. Mobile landscape Hero artwork is right-aligned within a 250–320px figure height. For mobile portrait, the artwork is centered and enlarged to at most 310px wide; its image frame reserves a `.73` aspect ratio and a separate 64px caption area. The image scales inside this frame without cropping, so source artwork orientation does not change the reserved Hero artwork area.
+- Above 800px, use the 1240px content maximum with fluid gutters and a two-column Hero. At 800px and below, the page shell is at most 720px, navigation becomes a menu, and the Hero retains two columns with a 190px artwork column. Work rows stack their details below the project summary; the five-step Process list reduces to three columns while Practice remains three columns.
+- At 520px and below, use 18px side gutters. Stack the Hero, Contact, Practice, case overviews, decision lists and evidence columns. Process and flow diagrams become single-column sequences; research chart rows stack their metrics, and wide tables scroll within their own wrapper.
+- On mobile landscape, keep the Hero artwork right-aligned in a 250–320px figure. On mobile portrait, center it at up to 310px wide and reserve a `.73` frame ratio plus a separate 72px caption area. Images retain intrinsic proportions inside the frame; do not crop the artwork.
 - Contact has a three-column layout above 1140px. From 521px through 1140px, the heading and description occupy the first row and the GitHub/email actions share the second row. From 521px through 660px, those actions stack. At 520px and below, all Contact content stacks vertically.
-- The Ambient Gallery is created only at widths of at least 1680px and when reduced motion is not requested. Its images remain in the side gutters; viewport placement is recalculated using the sticky header and current viewport dimensions. A visual adjustment between 1680px and 1850px lowers collage opacity.
-- Check 375px, 768px, 1024px and 1440px widths for overflow and readable line lengths.
-- Use semantic landmarks, one H1, descriptive links, a skip link and visible keyboard focus.
+- The Ambient Gallery is rendered only on the homepage at widths of at least 1680px and when reduced motion is not requested. Its images stay in the side gutters; vertical placement respects the sticky header and viewport. Between 1680px and 1850px, reduce collage opacity.
+- Preserve usable layouts at 375px, 520px, 800px, 1140px and 1680px transitions, and recheck representative widths for overflow and readable line lengths.
+- Use semantic landmarks, one `h1` per page, descriptive links, a skip link and visible keyboard focus. Keep the RAG figures' data available in a semantic table.
 - The theme control has a 44px square target. Other header controls and primary text links have at least 40px height; mobile navigation links have 44px height. Preserve these hit areas when adjusting the header or responsive layout.
 - `:focus-visible` uses a 2px outline with a 3px offset, in the current theme's focus color. Keep the focus ring visible in all five palettes.
 - Use the dedicated `--selection-background` and `--selection-foreground` tokens for selected text; preserve readable contrast in every theme.
 - English and Russian copy should be reviewed as separate natural texts.
 
-The Hero figure uses a reserved layout height: `clamp(360px, 32vw, 440px)` above 800px, 350px through the tablet layout, and a 250–320px clamp on mobile landscape. The mobile portrait frame has its own fixed ratio and caption area. These containers size the image with its intrinsic ratio; they do not crop portrait or landscape artwork.
+The Hero figure uses a reserved height of `clamp(360px, 32vw, 440px)` above 800px and 350px through the tablet layout. Mobile landscape uses a 250–320px height. These containers size the image with its intrinsic ratio; they do not crop portrait or landscape artwork.
 
 ## External assets
 
-The Header and Hero load the current SHA-256-versioned local WebP avatar first. If it fails, the React page tries the previous local WebP when available, then the public GitHub avatar URL, then a compact centered `sl` initials mark. Keep the circular avatar container and its reserved dimensions stable so image failure or fallback does not shift surrounding content. The Header avatar is 30px square (28px at 520px and below); the Hero avatar is 88px square (72px at 800px and below, 64px at 520px and below). The initials fallback uses the existing raised surface, accent text and centered serif treatment; preserve the same circular clipping and sizing as the image. The static no-JavaScript page uses the current local WebP directly. `public/favicon.png` and `public/apple-touch-icon.png` remain static, locally stored avatar-derived icons and are not updated by avatar synchronization. The Hero collection contains 44 local floral works; the first item, Mark Catesby's *Red Frangipanni*, is the fallback. Its public-domain source is the National Gallery of Art Open Access collection. Runtime artwork paths, dimensions, sources, licenses and attribution are maintained in `src/content/artworks.ts` and `public/artwork/credits.html`.
+The Header loads a SHA-256-versioned local WebP avatar. If it fails, the React page tries the previous local WebP when available, then the public GitHub avatar URL, then a centered `sl` initials mark. Preserve the circular container and its reserved size so fallback does not shift the Header. The Header avatar is 30px square (28px at 520px and below); the homepage Hero artwork beside the introduction is a separate botanical image. The initials fallback uses the raised surface, accent text and centered serif treatment. Static HTML fallbacks use the local WebP directly. `public/favicon.png` and `public/apple-touch-icon.png` are static avatar-derived icons.
 
-## Release v1.0.2
+The Hero artwork collection contains 44 local floral works; the first item, Mark Catesby's *Red Frangipanni*, is the fallback. Its public-domain source is the National Gallery of Art Open Access collection. Artwork paths, dimensions, sources, licenses and attribution are maintained in `src/content/artworks.ts` and `public/artwork/credits.html`.
 
-The `v1.0.2` tag points to commit `ef1c73b382ca5cdb935c9ca899483e7f7d86c9f7`. The release refined responsive artwork rendering, the mobile portrait Hero composition and gallery vertical positioning. The current Contact layout and email-copy behavior are documented above; the Contact changes predate this release tag. The Pages workflow includes TypeScript, ESLint and production build checks. A specific hosted workflow run must be verified in GitHub Actions before its result is described as a release check result.
+## Open Graph card
+
+Use the shared light-background 1200 × 630 PNG at `public/og-card.png`. The composition uses a large two-line serif heading, dark graphite text, a fine divider and a short burgundy accent. `public/og-card.svg` is the editable vector source. Keep this card fixed to the light palette regardless of the visitor's selected site theme.
