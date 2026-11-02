@@ -371,7 +371,7 @@ export const caseStudies: CaseStudy[] = [
     name: 'Context Waypoint',
     featured: false,
     eyebrow: { en: 'Developer tooling', ru: 'Инструменты разработки' },
-    maturity: { en: 'Local Agent Skill · source not published', ru: 'Локальный навык для AI-агентов · исходники не опубликованы' },
+    maturity: { en: 'Published Agent Skill · v0.1', ru: 'Опубликованный навык для AI-агентов · v0.1' },
     summary: {
       en: 'A Markdown convention and agent skill that help carry concise project state and handoffs between work sessions.',
       ru: 'Правила ведения Markdown-записей и навык для AI-агентов, помогающие передавать краткое состояние проекта между сессиями.',
@@ -420,14 +420,14 @@ export const caseStudies: CaseStudy[] = [
       ru: 'Конвенция даёт совместимому AI-агенту краткую запись о проекте, с которой можно продолжить работу.',
     },
     caveat: {
-      en: 'The public GitHub repository is currently empty. The local source and instructions are not available there, and no public release or software runtime is claimed.',
-      ru: 'Публичный репозиторий GitHub сейчас пуст. Локальные исходники и инструкции там недоступны; публичный релиз или исполняемая программа не заявляются.',
+      en: 'The public repository includes the README, Agent Skill, templates, documentation and a project example. Context Waypoint is a Markdown convention and reusable skill. It is not a CLI or hosted platform.',
+      ru: 'В публичном репозитории есть README, Agent Skill, шаблоны, документация и пример проекта. Context Waypoint представляет собой Markdown-конвенцию и переиспользуемый навык. Это не CLI и не облачная платформа.',
     },
     tags: ['Agent skills', 'Markdown', 'Project continuity'],
     repository: 'https://github.com/sl4dk1y/Context-Waypoint',
     repositoryStatus: {
-      en: 'Public repository is empty; source is not published.',
-      ru: 'Публичный репозиторий пуст, исходники не опубликованы.',
+      en: 'Public source, skill and templates',
+      ru: 'Опубликованы исходники, навык и шаблоны',
     },
     title: { en: 'Context Waypoint | sl4dk1y', ru: 'Context Waypoint | sl4dk1y' },
     description: {

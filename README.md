@@ -71,7 +71,7 @@ The six case studies have direct static routes:
 
 Each route has its own HTML entry and search/social metadata. React renders the matching case from `src/content/cases.ts`; the RAG case uses research figures, while the other cases use the shared flow-diagram component. The static English fallbacks are included in the route HTML.
 
-Context Waypoint is described as a local agent skill and Markdown convention. Its public GitHub repository is currently empty; the local source and instructions are not published there. The portfolio does not claim a public release or software runtime for it.
+Context Waypoint is a published Agent Skill and Markdown convention. Its public repository includes a README, the skill, templates, documentation and a project example. It is not a CLI or cloud service.
 
 Update public homepage copy in `src/content/translations.ts` and case-page content in `src/content/cases.ts`, keeping the English and Russian versions aligned. Keep project links limited to public repositories and approved information.
 
