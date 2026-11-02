@@ -1,10 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#100d10"/>
-  <rect x="84" y="82" width="70" height="70" rx="35" fill="#1b151a" stroke="#55404b"/>
-  <text x="119" y="128" fill="#e391aa" font-family="Georgia,serif" font-size="31" text-anchor="middle">sl</text>
-  <text x="84" y="220" fill="#b5a8af" font-family="Arial,sans-serif" font-size="19">sl4dk1y</text>
-  <text x="78" y="330" fill="#f3edf0" font-family="Georgia,serif" font-size="68">AI Engineering</text>
-  <text x="78" y="414" fill="#f3edf0" font-family="Georgia,serif" font-size="68">&amp; Backend Development</text>
-  <line x1="84" y1="485" x2="1116" y2="485" stroke="#332730"/>
-  <text x="84" y="536" fill="#b5a8af" font-family="Arial,sans-serif" font-size="20">Penza State University · sl4dk1y.github.io</text>
+  <rect width="1200" height="630" fill="#FAF7F8"/>
+  <text x="84" y="268" fill="#271D22" font-family="Georgia,serif" font-size="76" letter-spacing="-2">AI Engineering.</text>
+  <text x="84" y="366" fill="#271D22" font-family="Georgia,serif" font-size="76" letter-spacing="-2">Backend Development.</text>
+  <line x1="84" y1="430" x2="1116" y2="430" stroke="#E7DDE2"/>
+  <rect x="84" y="461" width="72" height="4" rx="2" fill="#852B49"/>
 </svg>

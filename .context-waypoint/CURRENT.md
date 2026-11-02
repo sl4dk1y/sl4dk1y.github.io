@@ -2,33 +2,31 @@
 
 ## Objective
 
-Preserve verified project context after the v1.1.0 functional changes and documentation update.
+Synchronize Context Waypoint with the Portfolio 2.0 redesign on `feature/editorial-hero-redesign`.
 
 ## Status
 
-- `package.json` declares `1.1.0`. The v1.1.0 candidate has not been tagged: only tags through `v1.0.2` exist, so do not call v1.1.0 released or published.
-- `main` and `origin/main` both point to `886cbcb2cd82a337ecbda79116870f7393436123` (`docs: document five themes and automated avatar sync`). Its parent feature commit is `9e82dbcf5feee5c5ad81a4904a03a1b0ae469ef2` (`feat: add five themes and automated avatar synchronization`). The worktree was clean before this Context Waypoint update.
-- README and MASTER now document the five themes, cyclic theme control, interface improvements, and automated avatar synchronization. See [the v1.1.0 candidate context record](sessions/2026-11-01-portfolio-v1.1.0-context-sync.md).
-- The app is a static React 19, TypeScript and Vite 8 portfolio. It has five persisted themes, RU/EN localization, a static artwork credits page, and local-first avatar assets maintained by a bounded GitHub Actions workflow.
-- No hosted GitHub Actions result, Pages publishing configuration, or current public deployment was verified. Do not infer deployment from workflow configuration.
+- `package.json` is `1.1.0`. Local tag `v1.1.0` exists and points to `995be8a544e2effa8965168334a925aa475c31cf` (`docs: sync context waypoint for v1.1.0`). The Portfolio 2.0 worktree changes are uncommitted and are not included in that tagged commit.
+- Current branch is `feature/editorial-hero-redesign`; `HEAD`, local `main`, and local `origin/main` all point to `995be8a544e2effa8965168334a925aa475c31cf`. The working tree already contains uncommitted app, content, documentation, Vite, SEO and asset changes. This sync must leave those changes untouched.
+- The tag's presence does not establish that it was pushed or that the site was published. Remote tag lookup was unavailable; the Pages deployment and public site state are unverified. Do not describe Portfolio 2.0 as published.
+- The worktree describes a static React 19, TypeScript and Vite 8 multi-page portfolio: a homepage plus six case routes, seven HTML build entries and static fallbacks, sitemap and per-route SEO, RU/EN, five themes, reduced-motion-aware scroll reveal, responsive editorial layouts, a botanical Hero and static Ambient Gallery, a light Open Graph card, and a local SHA-256-versioned avatar with automated synchronization. See [the Portfolio 2.0 context record](sessions/2026-11-02-portfolio-2.0-context-sync.md).
+- Public work is separated into three featured cases (RAG Retrieval Research, SnapKeep, AI Text Helper) and three developer-tool cases (Agent Safe Flow, Codebase Atlas, Context Waypoint). Engineering Practice and Research Notes are separate homepage sections; the notes describe only the RAG experiments.
 
 ## Active work
 
-None. Context Waypoint synchronization is complete; application code and Codebase Memory were not changed.
+Context Waypoint synchronization only. No application, documentation, Git, deployment or Codebase Memory changes are authorized by this task.
 
-## Open questions
+## Open release checks
 
-- Create the v1.1.0 tag when the owner decides to make this candidate a release.
-- Verify the relevant hosted Actions run, Pages publishing source, and deployed site separately if their status is needed.
+- Run the relevant typecheck, lint, build and release review against the completed Portfolio 2.0 changes.
+- The full browser matrix across routes, viewport sizes and all five themes remains incomplete. Earlier passes checked individual routes, mobile widths, themes and navigation; complete coverage is a release-check limitation, not a confirmed application defect.
+- Resolve the release plan with the owner: local `v1.1.0` already points to the pre-redesign commit, so the tag must not be moved to include these uncommitted changes. Confirm the intended version/tag and perform any Git or publishing actions separately.
+- Verify remote tag and actual Pages deployment when network access and an explicit release check are available.
 
 ## Next action
 
-Codebase Memory is the separate next stage in Documentation → Context Waypoint → Codebase Memory; do not update it without an explicit request.
+Finish this Context Waypoint update, then stop. Codebase Memory is a separate stage and is not requested.
 
-## Relevant decisions
+## Relevant constraints
 
-See [durable project constraints](CONSTRAINTS.md) and the [v1.1.0 candidate context record](sessions/2026-11-01-portfolio-v1.1.0-context-sync.md).
-
-## Active handoff
-
-None.
+See [durable project constraints](CONSTRAINTS.md) and the [Portfolio 2.0 context record](sessions/2026-11-02-portfolio-2.0-context-sync.md).

@@ -8,23 +8,26 @@
 
 ## 2. Структура репозитория
 
-- `src/main.tsx` — точка входа, монтирующая React-приложение.
-- `src/App.tsx` — одностраничная структура портфолио, навигация, переключатели языка и темы, метаданные страницы.
+- `src/App.tsx` — общий React-интерфейс главной страницы и кейсов, выбор страницы по URL, навигация и переключатели языка и темы.
+- `src/main.tsx` — монтирование общего React-приложения и настройка появления элементов с учётом `prefers-reduced-motion` и `IntersectionObserver`.
 - `src/components/AmbientGallery.tsx` — условно включаемая декоративная галерея изображений.
-- `src/content/portfolio.ts` — публичные данные профиля, список технологий и проектов, SEO-заголовок, описание и URL сайта.
-- `src/content/translations.ts` — переводы интерфейса на английский и русский.
+- `src/components/CaseDiagrams.tsx` и `src/components/ResearchFigures.tsx` — схемы кейсов и графики с таблицами результатов RAG-исследования.
+- `src/content/portfolio.ts` — публичные данные профиля, контакты, ссылки и SEO-метаданные.
+- `src/content/cases.ts` — двуязычные данные шести страниц кейсов, схем и результатов исследования.
+- `src/content/translations.ts` — переводы интерфейса и текста главной страницы на английский и русский.
 - `src/content/artworks.ts` — метаданные иллюстраций, включая пути, размеры, авторство, даты, источники, лицензии, alt-тексты и подписи.
 - `src/content/types.ts` — типы локали, темы и структурированных данных портфолио.
-- `src/styles.css` и `src/fonts.css` — оформление, адаптивность, темы, эффекты и локальные шрифты.
-- `index.html` — HTML-шаблон, начальные SEO-метаданные и англоязычный статический fallback.
-- `public/noscript.css` — оформление fallback-версии без JavaScript.
-- `public/images/` — локальные изображения профиля и Hero fallback.
+- `src/styles.css` и `src/fonts.css` — оформление главной страницы и кейсов, адаптивность, темы, эффекты и локальные шрифты.
+- `index.html` — HTML entry главной страницы, стартовые SEO-метаданные и англоязычный статический fallback.
+- `projects/<slug>/index.html` — шесть отдельных Vite entries с метаданными и статическими fallback-страницами кейсов.
+- `public/noscript.css` — оформление HTML fallback главной страницы и кейсов без JavaScript.
+- `public/images/` — локальные изображения профиля, Hero fallback и текстура `editorial-grain.svg`.
 - `.github/avatar-source.sha256` — SHA-256 состояния текущей и, если доступна, предыдущей версии синхронизируемой GitHub-аватарки.
 - `.github/workflows/sync-avatar.yml`, `scripts/sync-github-avatar.mjs` и `scripts/sync-github-avatar.test.mjs` — автоматическая проверка и синхронизация локального WebP-аватара, а также её тесты.
 - `public/artwork/hero/` и `public/artwork/ambient/` — локальные WebP-иллюстрации Hero и Ambient Gallery.
 - `public/artwork/credits.html` — публичная страница источников и атрибуции иллюстраций.
 - `public/fonts/` — тексты лицензий для локальных шрифтов; сами WOFF2-файлы поставляются пакетами `@fontsource-variable`.
-- `public/robots.txt`, `public/sitemap.xml`, `public/favicon.png`, `public/apple-touch-icon.png`, `public/og-card.svg` — публичные SEO- и графические ресурсы.
+- `public/robots.txt`, `public/sitemap.xml`, `public/favicon-32x32.png`, `public/favicon.png`, `public/apple-touch-icon.png`, `public/og-card.png` и `public/og-card.svg` — публичные SEO- и графические ресурсы.
 - `design-system/sl4dk1y-portfolio/MASTER.md` — действующая визуальная спецификация проекта.
 - `vite.config.ts`, `tsconfig*.json`, `eslint.config.js` — конфигурации Vite, TypeScript и ESLint.
 - `Dockerfile`, `nginx.conf`, `compose.yaml` — multi-stage сборка и локальный Nginx preview.
@@ -36,7 +39,7 @@
 
 Проект использует React 19, TypeScript в strict-режиме, Vite 8, CSS, ESLint 10, Node.js 24, Docker Compose и Nginx. Сайт — клиентское статическое приложение без backend/API. Vite настроен с `base: '/'`; адрес GitHub Pages — корень сайта `https://sl4dk1y.github.io/`.
 
-Сохраняй текущую компактную архитектуру: одна страница, небольшие React-компоненты, типизированные данные и локальные статические ресурсы. Сначала проверь существующие компоненты и источники контента; добавляй абстракции только при наличии повторного использования или понятного упрощения. Не переписывай проект без необходимости.
+Сохраняй текущую компактную архитектуру: статическая главная страница и шесть прямых HTML-маршрутов кейсов, которые монтируют общее React-приложение. `src/App.tsx` определяет кейс по `window.location.pathname`; содержимое хранится в типизированных модулях, а сборка Vite включает семь HTML entries. Используй существующие компоненты, схемы, данные и локальные статические ресурсы. Не добавляй routing framework и не переписывай архитектуру без необходимости.
 
 ### Minimal Sufficient Change
 
@@ -76,7 +79,7 @@ TypeScript настроен со `strict`, `noUnusedLocals` и `noUnusedParamete
 
 ## 6. Локализация RU/EN
 
-Английская и русская версии должны оставаться синхронными по структуре и смыслу. Переводимые строки интерфейса размещай в одинаковых ключах `en` и `ru` в `src/content/translations.ts`; двуязычные проектные тексты и подписи находятся в соответствующих структурах `src/content/portfolio.ts` и `src/content/artworks.ts`.
+Английская и русская версии должны оставаться синхронными по структуре и смыслу. Переводимые строки главной страницы и интерфейса размещай в `src/content/translations.ts`; тексты и метаданные кейсов — в `src/content/cases.ts`; подписи и alt-тексты иллюстраций — в `src/content/artworks.ts`.
 
 Не добавляй переводимые строки напрямую в JSX или CSS-generated content. Если строка показывается пользователю, обеспечь обе локали, включая `aria-label`, названия действий, навигацию, подписи и сообщения fallback, где применимо. После изменения сверяй, что переключение RU/EN обновляет весь соответствующий текст и локализованные SEO title/description, не меняя выбранную тему. Названия технологий и брендов сохраняй в принятом оригинальном написании.
 

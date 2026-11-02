@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="day">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FAF7F8" />
+    <script>
+      const colors = { day: '#FAF7F8', sunset: '#FBF5F1', forest: '#F4F7F2', rain: '#F3F6F8', night: '#100D10' }
+      try { const saved = localStorage.getItem('portfolio-theme'); const migrated = saved === 'light' ? 'day' : saved === 'dark' ? 'night' : saved; document.documentElement.dataset.theme = Object.prototype.hasOwnProperty.call(colors, migrated) ? migrated : 'day' } catch {}
+      document.querySelector('meta[name="theme-color"]').content = colors[document.documentElement.dataset.theme]
+    </script>
+    <meta name="description" content="A retrieval study comparing BM25, dense and hybrid search on Russian-language Mr. TyDi." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="RAG Retrieval Research | sl4dk1y" />
+    <meta property="og:description" content="A retrieval study comparing BM25, dense and hybrid search on Russian-language Mr. TyDi." />
+    <meta property="og:url" content="https://sl4dk1y.github.io/projects/rag-retrieval-research/" />
+    <meta property="og:image" content="https://sl4dk1y.github.io/og-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RAG Retrieval Research | sl4dk1y" />
+    <meta name="twitter:description" content="A retrieval study comparing BM25, dense and hybrid search on Russian-language Mr. TyDi." />
+    <link rel="canonical" href="https://sl4dk1y.github.io/projects/rag-retrieval-research/" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <noscript><link rel="stylesheet" href="/noscript.css" /></noscript>
+    <title>RAG Retrieval Research | sl4dk1y</title>
+  </head>
+  <body>
+    <noscript><main class="no-script-case"><a href="/">sl4dk1y</a><p>RETRIEVAL STUDY</p><h1>RAG Retrieval Research</h1><p>A Russian-language Mr. TyDi retrieval study with an evaluation on the original 9.6-million-document corpus and a separate reduced-collection comparison.</p><h2>Reduced-collection TEST</h2><p>On 995 TEST queries, BGE-M3 scored Recall@10 0.861307 and nDCG@10 0.692026. E5 scored 0.813065 and 0.641458.</p><h2>Interpretation</h2><p>The one-million-document collection was built partly from positive TEST qrels and historical retrieval runs. Results are conditional on that collection and do not establish performance on the full corpus. The public repository preserves the metrics, runs and protocol.</p><a href="https://github.com/sl4dk1y/rag-retrieval-research" rel="noreferrer noopener">View public repository ↗</a></main></noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="day">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FAF7F8" />
+    <script>
+      const colors = { day: '#FAF7F8', sunset: '#FBF5F1', forest: '#F4F7F2', rain: '#F3F6F8', night: '#100D10' }
+      try { const saved = localStorage.getItem('portfolio-theme'); const migrated = saved === 'light' ? 'day' : saved === 'dark' ? 'night' : saved; document.documentElement.dataset.theme = Object.prototype.hasOwnProperty.call(colors, migrated) ? migrated : 'day' } catch {}
+      document.querySelector('meta[name="theme-color"]').content = colors[document.documentElement.dataset.theme]
+    </script>
+    <meta name="description" content="A public case study of SnapKeep, a Python CLI for project snapshots and archive verification." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SnapKeep | sl4dk1y" />
+    <meta property="og:description" content="A public case study of SnapKeep, a Python CLI for project snapshots and archive verification." />
+    <meta property="og:url" content="https://sl4dk1y.github.io/projects/snapkeep/" />
+    <meta property="og:image" content="https://sl4dk1y.github.io/og-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SnapKeep | sl4dk1y" />
+    <meta name="twitter:description" content="A public case study of SnapKeep, a Python CLI for project snapshots and archive verification." />
+    <link rel="canonical" href="https://sl4dk1y.github.io/projects/snapkeep/" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <noscript><link rel="stylesheet" href="/noscript.css" /></noscript>
+    <title>SnapKeep | sl4dk1y</title>
+  </head>
+  <body>
+    <noscript><main class="no-script-case"><a href="/">sl4dk1y</a><p>EXPERIMENTAL CLI · ALPHA</p><h1>SnapKeep</h1><p>A Python CLI for timestamped ZIP snapshots of project folders.</p><h2>Approach</h2><p>The CLI previews selected paths, applies built-in path exclusions and a project-level ignore file, then writes a ZIP. Archive verification is a separate command.</p><p>Exclusions use paths and names, not file contents. SnapKeep remains alpha; I have not yet tested it in regular use, so it is not presented as a production backup system.</p><a href="https://github.com/sl4dk1y/SnapKeep" rel="noreferrer noopener">View public repository ↗</a></main></noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
