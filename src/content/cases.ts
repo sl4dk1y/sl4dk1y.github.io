@@ -371,7 +371,7 @@ export const caseStudies: CaseStudy[] = [
     name: 'Context Waypoint',
     featured: false,
     eyebrow: { en: 'Developer tooling', ru: 'Инструменты разработки' },
-    maturity: { en: 'Published Agent Skill · v0.1', ru: 'Опубликованный навык для AI-агентов · v0.1' },
+    maturity: { en: 'Published Agent Skill · v1.0.0', ru: 'Опубликованный навык для AI-агентов · v1.0.0' },
     summary: {
       en: 'A Markdown convention and agent skill that help carry concise project state and handoffs between work sessions.',
       ru: 'Правила ведения Markdown-записей и навык для AI-агентов, помогающие передавать краткое состояние проекта между сессиями.',
@@ -433,6 +433,66 @@ export const caseStudies: CaseStudy[] = [
     description: {
       en: 'A case study of a Markdown convention and agent skill for carrying project notes between work sessions.',
       ru: 'Кейс Context Waypoint: Markdown-конвенция и навык для передачи контекста проекта между сессиями AI-агента.',
+    },
+  },
+  {
+    id: 'human-writing',
+    path: '/projects/human-writing/',
+    name: 'Human Writing',
+    featured: false,
+    eyebrow: { en: 'Agent writing skill', ru: 'Навык для AI-агентов' },
+    maturity: { en: 'Published · five languages', ru: 'Опубликован · пять языков' },
+    summary: {
+      en: 'An Agent Skill for editing prose to sound natural while preserving its meaning, facts and the writer’s voice.',
+      ru: 'Agent Skill для редактуры текста: сохранить смысл, факты и авторский голос, убрав шаблонные обороты.',
+    },
+    problem: {
+      en: 'Generated prose can rely on stock phrases, uniform rhythm and claims that sound more certain than the evidence. A word blacklist does not address those habits.',
+      ru: 'В сгенерированном тексте встречаются шаблонные обороты, однообразный ритм и уверенные формулировки без опоры на факты. Список запрещённых слов эту проблему не решает.',
+    },
+    approach: {
+      en: 'The skill guides an agent through editing for specific facts, clear claims and varied rhythm while preserving meaning. SKILL.md links to focused references, including language-specific guidance and examples.',
+      ru: 'Навык помогает агенту редактировать текст: опираться на конкретные факты, формулировать мысли прямо и менять ритм, не искажая смысл. SKILL.md ссылается на профильные материалы, включая языковые рекомендации и примеры.',
+    },
+    architecture: {
+      en: { type: 'sequence', steps: ['Source text', 'SKILL.md guidance', 'Editorial revision', 'Optional style check', 'Revised text'] },
+      ru: { type: 'sequence', steps: ['Исходный текст', 'Правила SKILL.md', 'Редакторская переработка', 'Дополнительная проверка стиля', 'Итоговый текст'] },
+    },
+    diagramTitle: { en: 'A guided editing process', ru: 'Процесс редактуры с опорой на навык' },
+    diagramCaption: {
+      en: 'The Python checker is an optional offline aid. It flags patterns for human review and is not an authorship detector or required runtime step.',
+      ru: 'Python-чекер работает офлайн и служит вспомогательным инструментом. Он отмечает признаки для ручной проверки, не определяет авторство и не является обязательным этапом.',
+    },
+    decisions: {
+      en: [
+        'The skill focuses on writing habits and structure rather than a fixed blacklist of words.',
+        'SKILL.md points to references for general patterns and English, Russian, German, Spanish and French.',
+        'The checker uses Python’s standard library, runs offline and makes no model calls.',
+      ],
+      ru: [
+        'Навык обращает внимание на привычки письма и структуру, а не на фиксированный список запрещённых слов.',
+        'SKILL.md ссылается на общие рекомендации и материалы на английском, русском, немецком, испанском и французском языках.',
+        'Чекер использует стандартную библиотеку Python, работает офлайн и не обращается к моделям.',
+      ],
+    },
+    validation: {
+      en: 'The repository includes examples in five languages and an offline checker for dashes, formatting, sentence-length variation and phrase-list matches. Its signals are heuristic and require human review.',
+      ru: 'В репозитории есть примеры на пяти языках и офлайн-чекер тире, форматирования, разброса длины предложений и совпадений с перечнями фраз. Его эвристические сигналы требуют ручной проверки.',
+    },
+    outcome: {
+      en: 'The skill can guide writing and editing in agents that support the Agent Skills format. The checker highlights text for review; it cannot reliably determine whether a person or a model wrote it.',
+      ru: 'Навык помогает писать и редактировать текст в агентах с поддержкой формата Agent Skills. Чекер выделяет фрагменты для проверки, но не может надёжно определить, написал их человек или модель.',
+    },
+    caveat: {
+      en: 'The checker measures surface patterns. It does not understand context, judge authorship or replace editorial review.',
+      ru: 'Чекер анализирует поверхностные признаки. Он не учитывает контекст, не определяет авторство и не заменяет редактуру.',
+    },
+    tags: ['Agent Skill', 'Python', 'Offline checker', 'Writing'],
+    repository: 'https://github.com/sl4dk1y/human-writing',
+    title: { en: 'Human Writing | sl4dk1y', ru: 'Human Writing | sl4dk1y' },
+    description: {
+      en: 'An Agent Skill for editing prose, with five-language guidance and an offline heuristic checker.',
+      ru: 'Agent Skill для редактуры текста, рекомендации на пяти языках и офлайн-чекер стилистических признаков.',
     },
   },
 ]

@@ -14,6 +14,7 @@ export default defineConfig({
         ragRetrievalResearch: 'projects/rag-retrieval-research/index.html',
         codebaseAtlas: 'projects/codebase-atlas/index.html',
         contextWaypoint: 'projects/context-waypoint/index.html',
+        humanWriting: 'projects/human-writing/index.html',
       },
     },
   },

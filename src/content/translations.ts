@@ -37,7 +37,7 @@ export const translations = {
       openCase: 'Read the case',
       repository: 'Repository',
       moreTitle: 'Developer tools and agent workflows',
-      moreIntro: 'Two public tools and a local skill for carrying project context between agent sessions.',
+      moreIntro: 'Public tools and Agent Skills for code exploration, writing and project work.',
     },
     practice: {
       eyebrow: 'ENGINEERING PRACTICE',
@@ -168,7 +168,7 @@ export const translations = {
       openCase: 'Открыть кейс',
       repository: 'Репозиторий',
       moreTitle: 'Инструменты разработки и процессы для агентов',
-      moreIntro: 'Два открытых инструмента и локальный навык для передачи контекста между сессиями AI-агентов.',
+      moreIntro: 'Публичные инструменты и Agent Skills для работы с кодом, текстом и проектами.',
     },
     practice: {
       eyebrow: 'ИНЖЕНЕРНАЯ ПРАКТИКА',

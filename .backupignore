@@ -1,0 +1,44 @@
+node_modules/
+dist/
+.env
+.env.*
+.npmrc
+*.pem
+*.key
+npm-debug.log*
+.DS_Store
+*/.DS_Store
+.AppleDouble/*
+__MACOSX/*
+._*
+.codebase-memory/
+
+.git/*
+
+# Python virtual environments
+venv/*
+.venv/*
+.tools/markitdown/.venv/*
+
+# Python/cache files
+__pycache__/*
+*/__pycache__/*
+*.pyc
+.pytest_cache/*
+.pycache_compile/*
+.mypy_cache/*
+.ruff_cache/*
+
+# Existing backup/archive artifacts
+backups/*
+*.zip
+.env
+bot.db
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db3
+*.db3-*
