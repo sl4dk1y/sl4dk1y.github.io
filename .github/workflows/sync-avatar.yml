@@ -32,6 +32,9 @@ jobs:
       - name: Synchronize avatar
         id: sync
         run: node scripts/sync-github-avatar.mjs
+      - name: Confirm avatar is unchanged
+        if: steps.sync.outputs.changed == 'false'
+        run: echo "Avatar is unchanged; skipping commit and Pages deployment."
       - name: Commit and push avatar files
         id: commit
         if: steps.sync.outputs.changed == 'true'

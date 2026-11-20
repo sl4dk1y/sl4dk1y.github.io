@@ -79,8 +79,97 @@ test('new avatar is encoded and updates only the avatar references', async (t) =
 test('HTTP errors leave existing state untouched', async (t) => {
   const root = await makeFixture(t)
   const before = await readFile(path.join(root, 'index.html'), 'utf8')
-  await assert.rejects(syncAvatar({ root, fetchImpl: mockFetch({ profileStatus: 503 }) }), /HTTP 503/)
+  let calls = 0
+  await assert.rejects(syncAvatar({
+    root,
+    fetchImpl: async (url, options) => {
+      calls += 1
+      return mockFetch({ profileStatus: 404 })(url, options)
+    },
+    sleepImpl: async () => {},
+  }), /HTTP 404/)
+  assert.equal(calls, 1)
   assert.equal(await readFile(path.join(root, 'index.html'), 'utf8'), before)
+})
+
+test('transient GitHub errors retry and recover; exhausted retries remain failures', async (t) => {
+  const root = await makeFixture(t)
+  let profileCalls = 0
+  const recoveredFetch = async (url, options) => {
+    if (String(url).includes('api.github.com') && profileCalls++ < 2) return new Response('temporarily unavailable', { status: 503 })
+    return mockFetch()(url, options)
+  }
+  const recovered = await syncAvatar({
+    root,
+    fetchImpl: recoveredFetch,
+    sleepImpl: async () => {},
+    encode: async (_inputPath, outputPath) => writeFile(outputPath, webpBytes),
+  })
+  assert.equal(recovered.changed, true)
+  assert.equal(profileCalls, 3)
+
+  for (const status of [403, 429, 500, 503]) {
+    const failedRoot = await makeFixture(t)
+    let calls = 0
+    const failingFetch = async (url, options) => {
+      if (String(url).includes('api.github.com')) {
+        calls += 1
+        const headers = status === 403 ? { 'x-ratelimit-remaining': '0' } : undefined
+        return new Response('failure', { status, headers })
+      }
+      return mockFetch()(url, options)
+    }
+    await assert.rejects(syncAvatar({ root: failedRoot, fetchImpl: failingFetch, sleepImpl: async () => {} }), new RegExp('HTTP ' + status))
+    assert.equal(calls, 3)
+    assert.equal((await readFile(path.join(failedRoot, '.github/avatar-source.sha256'), 'utf8')), 'current=' + priorHash + '\nprevious=\n')
+  }
+})
+
+test('Retry-After uses a bounded server delay or the attempt-based fallback', async (t) => {
+  const cases = [
+    { name: 'missing', header: undefined, expectedDelay: 1000 },
+    { name: 'empty', header: '', expectedDelay: 1000 },
+    { name: 'invalid', header: 'later', expectedDelay: 1000 },
+    { name: 'zero', header: '0', expectedDelay: 0 },
+    { name: 'two seconds', header: '2', expectedDelay: 2000 },
+    { name: 'over ten seconds', header: '30', expectedDelay: 10_000 },
+  ]
+
+  for (const { name, header, expectedDelay } of cases) {
+    const root = await makeFixture(t)
+    let profileCalls = 0
+    const delays = []
+    const retryFetch = async (url, options) => {
+      if (String(url).includes('api.github.com') && profileCalls++ === 0) {
+        const headers = header === undefined ? {} : { 'retry-after': header }
+        return new Response('rate limited', { status: 429, headers })
+      }
+      return mockFetch()(url, options)
+    }
+
+    const result = await syncAvatar({
+      root,
+      fetchImpl: retryFetch,
+      sleepImpl: async (ms) => { delays.push(ms) },
+      encode: async (_inputPath, outputPath) => writeFile(outputPath, webpBytes),
+    })
+
+    assert.equal(result.changed, true, name)
+    assert.equal(profileCalls, 2, name)
+    assert.deepEqual(delays, [expectedDelay], name)
+  }
+})
+
+test('network errors retry three times and then remain failures', async (t) => {
+  const root = await makeFixture(t)
+  let calls = 0
+  await assert.rejects(syncAvatar({
+    root,
+    fetchImpl: async () => { calls += 1; throw new TypeError('network unavailable') },
+    sleepImpl: async () => {},
+  }), /failed after 3 attempts: network unavailable/)
+  assert.equal(calls, 3)
+  assert.equal((await readFile(path.join(root, '.github/avatar-source.sha256'), 'utf8')), 'current=' + priorHash + '\nprevious=\n')
 })
 
 test('invalid and oversized image responses fail before encoding', async (t) => {
@@ -180,14 +269,16 @@ test('fallback and static links remain aligned with the local-first app chain', 
     readFile(path.join(projectRoot, '.github/workflows/sync-avatar.yml'), 'utf8'),
     readFile(path.join(projectRoot, '.github/workflows/pages.yml'), 'utf8'),
   ])
-  assert.match(app, /avatarSources = \[avatarUrl, profile\.avatarFallback, profile\.githubAvatar\]\.filter/)
+  assert.match(app, /avatarSources = \[profile\.avatar, profile\.avatarFallback, profile\.githubAvatar\]\.filter/)
   assert.match(app, /sourceIndex >= avatarSources\.length/)
   const current = portfolio.match(/avatar: '(\/images\/github-avatar-[a-f0-9]{64}\.webp)'/)
   assert.ok(current)
-  assert.equal((html.match(new RegExp(current[1].replaceAll('/', '\\/'), 'g')) || []).length, 2)
+  assert.equal((html.match(new RegExp(current[1].replaceAll('/', '\\/'), 'g')) || []).length, 1)
   assert.doesNotMatch(html, /rel=["']preload["'][^>]*github-avatar/)
   assert.match(syncWorkflow, /event_type=avatar-updated/)
   assert.match(syncWorkflow, /client_payload\[commit\]=\$PUSHED_COMMIT/)
+  assert.match(syncWorkflow, /for attempt in 1 2 3; do[\s\S]*?GitHub Pages dispatch failed[\s\S]*?exit 1/)
+  assert.doesNotMatch(syncWorkflow, /continue-on-error:\s*true/)
   assert.match(pagesWorkflow, /types: \[avatar-updated\]/)
   assert.match(pagesWorkflow, /client_payload\.commit \|\| github\.sha/)
 })
@@ -200,6 +291,9 @@ test('workflow allowlist includes managed add/delete paths and lets push conflic
   assert.match(workflow, /git push origin HEAD:refs\/heads\/main/)
   assert.doesNotMatch(workflow, /git add[^\n]*-A/)
   assert.doesNotMatch(workflow, /git push[^\n]*--force/)
+  assert.match(workflow, /Confirm avatar is unchanged[\s\S]*?if: steps\.sync\.outputs\.changed == 'false'/)
+  assert.match(workflow, /Commit and push avatar files[\s\S]*?if: steps\.sync\.outputs\.changed == 'true'/)
+  assert.match(workflow, /Trigger GitHub Pages deployment[\s\S]*?steps\.sync\.outputs\.changed == 'true'/)
 })
 
 test('a rejected push stops before Pages dispatch without invoking real Git', () => {

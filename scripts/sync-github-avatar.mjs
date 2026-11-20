@@ -56,6 +56,31 @@ async function defaultEncode(inputPath, outputPath) {
   })
 }
 
+function isTransientResponse(response) {
+  if (response.status === 429 || response.status >= 500) return true
+  return response.status === 403 && (response.headers.has('retry-after') || response.headers.get('x-ratelimit-remaining') === '0')
+}
+
+async function fetchWithRetry(fetchImpl, input, options, sleepImpl = (ms) => new Promise((resolve) => setTimeout(resolve, ms))) {
+  const maxAttempts = 3
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    let response
+    try {
+      response = await fetchImpl(input, options)
+    } catch (error) {
+      if (attempt === maxAttempts) throw new Error('GitHub request failed after ' + maxAttempts + ' attempts: ' + (error instanceof Error ? error.message : 'network error'))
+      await sleepImpl(attempt * 1000)
+      continue
+    }
+    if (!isTransientResponse(response) || attempt === maxAttempts) return response
+    const retryAfterHeader = response.headers.get('retry-after')
+    const retryAfter = retryAfterHeader?.trim() ? Number(retryAfterHeader) : Number.NaN
+    const delay = Number.isFinite(retryAfter) && retryAfter >= 0 ? Math.min(retryAfter * 1000, 10_000) : attempt * 1000
+    await sleepImpl(delay)
+  }
+  fail('GitHub request retry loop ended unexpectedly.')
+}
+
 function isWebp(bytes) {
   return bytes.length >= 12 && bytes.subarray(0, 4).toString() === 'RIFF' && bytes.subarray(8, 12).toString() === 'WEBP'
 }
@@ -128,8 +153,9 @@ async function commitFileUpdates(updates) {
   }
 }
 
-export async function syncAvatar({ root, fetchImpl = fetch, encode = defaultEncode }) {
-  const api = await fetchImpl('https://api.github.com/users/' + LOGIN, {
+export async function syncAvatar({ root, fetchImpl = fetch, encode = defaultEncode, sleepImpl }) {
+  const request = (input, options) => fetchWithRetry(fetchImpl, input, options, sleepImpl)
+  const api = await request('https://api.github.com/users/' + LOGIN, {
     headers: { accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28' },
     redirect: 'error',
     signal: AbortSignal.timeout(15_000),
@@ -154,7 +180,7 @@ export async function syncAvatar({ root, fetchImpl = fetch, encode = defaultEnco
   if (avatarUrl.protocol !== 'https:' || avatarUrl.hostname !== 'avatars.githubusercontent.com' || avatarUrl.port || avatarUrl.username || avatarUrl.password) {
     fail('GitHub avatar URL host was not allowed.')
   }
-  const imageResponse = await fetchImpl(avatarUrl, {
+  const imageResponse = await request(avatarUrl, {
     headers: { accept: 'image/avif,image/webp,image/png,image/jpeg' },
     redirect: 'error',
     signal: AbortSignal.timeout(15_000),
